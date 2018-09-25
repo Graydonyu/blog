@@ -52,4 +52,27 @@ public class ResultMap {
         return new ResultMap(ResultEnum.ERROR.getCode(),ResultEnum.ERROR.getMsg(),null);
     }
 
+    public static ResultMap nulls() {
+        return new ResultMap(ResultEnum.NULL.getCode(), ResultEnum.NULL.getMsg(), null);
+    }
+
+    public static ResultMap notice(String msg, Object data)
+    {
+        return new ResultMap(ResultEnum.NOTICE.getCode(), msg, data);
+    }
+
+    public static ResultMap warn(String msg, Object data)
+    {
+        return new ResultMap(ResultEnum.WARN.getCode(), msg, data);
+    }
+
+    public static ResultMap warn(Object data)
+    {
+        return new ResultMap(ResultEnum.WARN.getCode(), ResultEnum.WARN.getMsg(), data);
+    }
+
+    public static ResultMap lossParam()
+    {
+        return new ResultMap(ResultEnum.ERROR.getCode(), "参数缺省", null);
+    }
 }

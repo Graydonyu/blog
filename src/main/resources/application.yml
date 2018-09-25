@@ -8,3 +8,8 @@ spring:
     url: jdbc:mysql://localhost:3306/blog?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true
     username: root
     password: root
+  #Redis Config
+  #redis:
+      #sentinel:
+      #master: mymaster
+    #nodes: 47.106.38.101:26379,47.106.38.101:26380

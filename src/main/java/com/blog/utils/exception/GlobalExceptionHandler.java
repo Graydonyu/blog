@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
     public ResultMap jsonErrorHandler(HttpServletRequest req, MyException e) throws Exception {
 
         //TODO 错误日志处理
-        return ResultMap.fail(e.getMessage(), "some data");
+        return ResultMap.error(e.getMessage(), "some data");
     }
 
 }
