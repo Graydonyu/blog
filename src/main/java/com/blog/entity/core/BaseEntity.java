@@ -1,5 +1,6 @@
 package com.blog.entity.core;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import org.apache.commons.collections.CollectionUtils;
 
@@ -14,7 +15,7 @@ public class BaseEntity extends CommonEntity{
     /**
      * 实体Id
      */
-    @TableId
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
 

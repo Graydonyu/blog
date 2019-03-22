@@ -1,6 +1,6 @@
 package com.blog.mapper;
 
-import com.blog.entity.User;
+import com.blog.entity.Post;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author ygd
  * @since 2019-03-22
  */
-public interface UserMapper extends BaseMapper<User> {
+public interface PostMapper extends BaseMapper<Post> {
 
 }
