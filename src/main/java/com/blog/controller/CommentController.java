@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
  * @since 2019-03-22
  */
 @Controller
-@RequestMapping("//comment")
+@RequestMapping("/comment")
 public class CommentController {
 
 }
