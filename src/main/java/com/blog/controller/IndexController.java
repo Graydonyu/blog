@@ -23,10 +23,8 @@ import java.util.Map;
 @Slf4j
 @Controller
 @RequestMapping("/index")
-public class IndexController {
+public class IndexController extends BaseController {
 
-    @Autowired
-    PostService postService;
 
     @GetMapping("/")
     public String index(){
@@ -34,7 +32,16 @@ public class IndexController {
         page.setCurrent(1);
         page.setSize(10);
 
-        IPage<Map<String, Object>> pageDate = postService.pageMaps(page, null);
+        IPage<Map<String, Object>> pageData = postService.pageMaps(page, null);
+
+        //添加关联的用户信息
+        userService.join(pageData, "user_id");
+
+
+        req.setAttribute("pageData", pageData);
+
+        log.info("--------------->" + pageData.getRecords());
+        log.info("-------------------------------" + page.getPages());
 
         return "index";
     }
