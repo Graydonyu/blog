@@ -22,7 +22,7 @@
         <a href="/"><i class="iconfont icon-jiaoliu"></i>交流</a>
       </li>
       <li class="layui-nav-item">
-        <a href="case/case.html"><i class="iconfont icon-iconmingxinganli"></i>案例</a>
+        <a href="/case/case.html"><i class="iconfont icon-iconmingxinganli"></i>案例</a>
       </li>
       <li class="layui-nav-item">
         <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>框架</a>
@@ -86,7 +86,7 @@
               <div class="layui-form-item">
                 <button class="layui-btn" lay-filter="*" lay-submit>立即登录</button>
                 <span style="padding-left:20px;">
-                  <a href="forget.html">忘记密码？</a>
+                  <a href="/forget">忘记密码？</a>
                 </span>
               </div>
               <div class="layui-form-item fly-form-app">
@@ -112,6 +112,11 @@
 </div>
 
 <script>
+    $(function () {
+        $("#captcha").on("click",function () {
+            this.src="/captcha";
+        })
+    })
 layui.cache.page = 'user';
 layui.cache.user = {
   username: '游客'

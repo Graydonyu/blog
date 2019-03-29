@@ -125,6 +125,11 @@
 
 <!--<script src="../../res/layui/layui.js"></script>-->
 <script>
+  $(function () {
+      $("#reg_captcha").click(function () {
+          this.src="/captcha";
+      })
+  })
 layui.cache.page = 'user';
 layui.cache.user = {
   username: '游客'
