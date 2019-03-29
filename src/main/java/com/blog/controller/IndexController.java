@@ -11,7 +11,6 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -31,7 +30,6 @@ import java.util.Map;
 @Api(tags = {"首页相关"},value = "首页")
 @Slf4j
 @Controller
-@RequestMapping("/index")
 public class IndexController extends BaseController {
 
     private static final String KAPTCHA_SESSION_KEY = "KAPTCHA_SESSION_KEY";
@@ -77,5 +75,15 @@ public class IndexController extends BaseController {
         ServletOutputStream outputStream = response.getOutputStream();
 
         ImageIO.write(producerImage,"jpg",outputStream);
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "user/login";
+    }
+
+    @GetMapping("/reg")
+    public String register(){
+        return "user/reg";
     }
 }
