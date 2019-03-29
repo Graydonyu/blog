@@ -15,13 +15,14 @@ public class KaptchaConfig {
 
     @Bean
     public DefaultKaptcha producer () {
-        Properties propertis = new Properties();
-        propertis.put("kaptcha.border", "no");
-        propertis.put("kaptcha.image.height", "38");
-        propertis.put("kaptcha.image.width", "150");
-        propertis.put("kaptcha.textproducer.font.color", "black");
-        propertis.put("kaptcha.textproducer.font.size", "32");
-        Config config = new Config(propertis);
+        Properties properties = new Properties();
+        properties.put("kaptcha.border", "no");
+        properties.put("kaptcha.image.height", "38");
+        properties.put("kaptcha.image.width", "150");
+        properties.put("kaptcha.textproducer.font.color", "black");
+        properties.put("kaptcha.textproducer.font.size", "32");
+        properties.put("kaptcha.textproducer.char.length","4");
+        Config config = new Config(properties);
         DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
         defaultKaptcha.setConfig(config);
 
