@@ -125,10 +125,28 @@
 
 <!--<script src="../../res/layui/layui.js"></script>-->
 <script>
-  $(function () {
-      $("#reg_captcha").click(function () {
-          this.src="/captcha";
-      })
+  layui.use(['jquery','layer'],function () {
+    var $ = layui.$,layer = layui.layer;
+
+    $("#reg_captcha").click(function () {
+      this.src="/captcha";
+    })
+  })
+
+  layui.use('form',function () {
+    var form = layui.form;
+    
+    form.on('submit(*)',function (data) {
+      layui.$.post('/register',data.field,function (res) {
+        if(res.code == 0){
+          location.href = 'user/center';
+        }else{
+          layer.msg(res.msg);
+        }
+      });
+
+      return false;
+    });
   })
 layui.cache.page = 'user';
 layui.cache.user = {

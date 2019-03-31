@@ -112,10 +112,12 @@
 </div>
 
 <script>
-    $(function () {
-        $("#captcha").on("click",function () {
-            this.src="/captcha";
-        })
+    layui.use(['jquery','layer'],function () {
+      var $ = layui.$,layer = layui.layer;
+
+      $("#captcha").on("click",function () {
+        this.src="/captcha";
+      })
     })
 layui.cache.page = 'user';
 layui.cache.user = {

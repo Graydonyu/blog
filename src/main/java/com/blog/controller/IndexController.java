@@ -1,8 +1,10 @@
 package com.blog.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.entity.Post;
+import com.blog.entity.User;
 import com.google.code.kaptcha.Producer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,6 +13,8 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -85,5 +89,20 @@ public class IndexController extends BaseController {
     @GetMapping("/reg")
     public String register(){
         return "user/reg";
+    }
+
+    @ApiOperation("注册用户信息")
+    @ResponseBody
+    @PostMapping("/register")
+    public R doRegister(User user,String captcha){
+        String kaptcha = (String)SecurityUtils.getSubject().getSession().getAttribute(KAPTCHA_SESSION_KEY);
+
+        if(!kaptcha.equalsIgnoreCase(captcha)){
+            System.out.println(kaptcha + "----" + captcha);
+            return R.failed("验证码不正确");
+        }
+
+        R r = userService.register(user);
+        return r;
     }
 }

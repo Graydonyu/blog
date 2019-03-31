@@ -1,6 +1,7 @@
 package com.blog.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.blog.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -22,4 +23,11 @@ public interface UserService extends IService<User> {
      *@Discription ：添加关联的用户信息
      */
     void join(IPage<Map<String, Object>> pageData, String user_id);
+
+    /**
+     *@Author ：yuguidong
+     *@Date ：2019/3/22
+     *@Discription ：注册用户信息
+     */
+    R register(User user);
 }
