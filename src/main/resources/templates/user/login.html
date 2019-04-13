@@ -119,6 +119,22 @@
         this.src="/captcha";
       })
     })
+
+    layui.use('form',function () {
+      var form = layui.form;
+      
+      form.on('submit(*)',function (data) {
+        $.post('/login',data.field,function (res) {
+          if(res.code == 0){
+            location.href="/user/center";
+          } else {
+            layer.msg(res.msg);
+          }
+        });
+
+        return false;
+      });
+    });
 layui.cache.page = 'user';
 layui.cache.user = {
   username: '游客'

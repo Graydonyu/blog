@@ -1,5 +1,6 @@
 package com.blog.controller;
 
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -9,7 +10,15 @@ import com.google.code.kaptcha.Producer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.security.SecurityUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -104,5 +113,33 @@ public class IndexController extends BaseController {
 
         R r = userService.register(user);
         return r;
+    }
+
+    @ApiOperation("用户登陆")
+    @ResponseBody
+    @PostMapping("/login")
+    public R login(String email,String password){
+        if(StringUtils.isEmpty(email) || StringUtils.isEmpty(password)){
+            return R.failed("用户名或密码不能为空!");
+        }
+
+        AuthenticationToken token = new UsernamePasswordToken(email, SecureUtil.md5(password));
+
+        try {
+            //尝试登陆，将会调用realm的认证方法
+            SecurityUtils.getSubject().login(token);
+        }catch (AuthenticationException e){
+            if(e instanceof UnknownAccountException){
+                return R.failed("用户不存在");
+            }else if(e instanceof LockedAccountException){
+                return R.failed("用户被禁用");
+            }else if(e instanceof IncorrectCredentialsException){
+                return R.failed("密码错误");
+            }else{
+                return R.failed("用户认证失败");
+            }
+        }
+
+        return R.ok("登录成功");
     }
 }
