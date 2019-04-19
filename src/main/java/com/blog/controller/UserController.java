@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class UserController {
 
-    @GetMapping("/home")
+    @GetMapping("/center")
     public String center(){
         log.info("-------------->进入个人中心");
 
