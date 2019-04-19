@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.blog.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.blog.shiro.AccountProfile;
 
 import java.util.Map;
 
@@ -30,4 +31,11 @@ public interface UserService extends IService<User> {
      *@Discription ：注册用户信息
      */
     R register(User user);
+
+    /**
+     *@Author ：yuguidong
+     *@Date ：2019/4/19
+     *@Discription ：登录认证
+     */
+    AccountProfile login(String email, String password);
 }

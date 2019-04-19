@@ -2,14 +2,16 @@ package com.blog.entity.core;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import org.apache.commons.collections.CollectionUtils;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by yuguidong on 2018/9/21.
  */
-public class BaseEntity extends CommonEntity{
+public class BaseEntity extends Model<BaseEntity> {
 
     private static final long serialVersionUID = 1L;
     /**
@@ -72,4 +74,8 @@ public class BaseEntity extends CommonEntity{
         return idAndSelfMap;
     }
 
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
 }

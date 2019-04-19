@@ -3,6 +3,7 @@ package com.blog.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -17,5 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    @GetMapping("/home")
+    public String center(){
+        log.info("-------------->进入个人中心");
+
+        return "user/home";
+    }
 }
 

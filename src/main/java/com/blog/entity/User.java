@@ -1,5 +1,6 @@
 package com.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.blog.entity.core.Entity;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
+@TableName("user")
 public class User extends Entity {
 
         /**

@@ -21,6 +21,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -118,7 +119,7 @@ public class IndexController extends BaseController {
     @ApiOperation("用户登陆")
     @ResponseBody
     @PostMapping("/login")
-    public R login(String email,String password){
+    public R login(String email,String password, ModelMap model){
         if(StringUtils.isEmpty(email) || StringUtils.isEmpty(password)){
             return R.failed("用户名或密码不能为空!");
         }

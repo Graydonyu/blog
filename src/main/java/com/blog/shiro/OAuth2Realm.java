@@ -1,17 +1,20 @@
 package com.blog.shiro;
 
+import com.blog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
 public class OAuth2Realm extends AuthorizingRealm {
+
+    @Autowired
+    UserService userService;
 
     /**
      * 授权
@@ -31,6 +34,14 @@ public class OAuth2Realm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        return null;
+        UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
+
+        //注意token.getUsername()是指email！！
+        AccountProfile profile = userService.login(token.getUsername(), String.valueOf(token.getPassword()));
+
+        log.info("---------------->进入认证步骤");
+
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(profile, token.getCredentials(), getName());
+        return info;
     }
 }
