@@ -1,5 +1,6 @@
 package com.blog.controller;
 
+import com.blog.service.CategoryService;
 import com.blog.service.PostService;
 import com.blog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,4 +28,7 @@ public class BaseController {
 
     @Autowired
     PostService postService;
+
+    @Autowired
+    CategoryService categoryService;
 }

@@ -1,21 +1,22 @@
 
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.springframework.org/schema/data/jaxb">
 <head>
   <meta charset="utf-8">
   <title>用户主页</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="keywords" content="fly,layui,前端社区">
   <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
-  <link rel="stylesheet" href="../../res/layui/css/layui.css">
-  <link rel="stylesheet" href="../../res/css/global.css">
+
+  <!--全局样式-->
+  <link th:include="common/static :: style" />
 </head>
 <body style="margin-top: 65px;">
 
 <div class="fly-header layui-bg-black">
   <div class="layui-container">
     <a class="fly-logo" href="/">
-      <img src="../../res/images/logo.png" alt="layui">
+      <img src="/images/logo.png" alt="layui">
     </a>
     <ul class="layui-nav fly-nav layui-hide-xs">
       <li class="layui-nav-item layui-this">
@@ -50,7 +51,7 @@
   </div>
 </div>
 
-<div class="fly-home fly-panel" style="background-image: url();">
+<div class="fly-home fly-panel" style="background-image: url(/images/case.png);">
   <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="贤心">
   <i class="iconfont icon-renzheng" title="Fly社区认证"></i>
   <h1>

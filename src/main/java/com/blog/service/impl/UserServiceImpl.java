@@ -32,25 +32,19 @@ import java.util.Map;
  */
 @Slf4j
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements UserService {
 
     @Override
-    public void join(IPage<Map<String, Object>> pageData, String linkfield) {
-        List<Map<String, Object>> records = pageData.getRecords();
+    public void join(Map<String, Object> map, String linkfield) {
+        String userId = map.get(linkfield).toString();
+        User user = this.getById(userId);
 
-        if (CollectionUtils.isNotEmpty(records)) {
-            records.forEach(map -> {
-                String userId = map.get(linkfield).toString();
-                User user = this.getById(userId);
+        Map<String, Object> author = new HashMap<>();
+        author.put("id", user.getId());
+        author.put("username", user.getUsername());
+        author.put("avatar", user.getAvatar());
 
-                Map<String, Object> author = new HashMap<>();
-                author.put("username", user.getUsername());
-                author.put("avatar", user.getAvatar());
-                author.put("id", user.getId());
-
-                map.put("author", author);
-            });
-        }
+        map.put("author", author);
     }
 
     @Override

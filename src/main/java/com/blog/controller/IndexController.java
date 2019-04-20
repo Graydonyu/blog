@@ -1,6 +1,8 @@
 package com.blog.controller;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.crypto.SecureUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -31,6 +33,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,12 +61,19 @@ public class IndexController extends BaseController {
         page.setCurrent(1);
         page.setSize(10);
 
+        //置顶文章（取5条）
+        List<Map<String, Object>> levelPosts = postService.listMaps(new QueryWrapper<Post>().orderByDesc("level").last("limit 5"));
+        if(CollectionUtil.isNotEmpty(levelPosts)){
+            userService.join(levelPosts, "user_id");
+            categoryService.join(levelPosts, "category_id");
+        }
+
         IPage<Map<String, Object>> pageData = postService.pageMaps(page, null);
 
         //添加关联的用户信息
         userService.join(pageData, "user_id");
 
-
+        req.setAttribute("levelPosts",levelPosts);
         req.setAttribute("pageData", pageData);
 
         log.info("--------------->" + pageData.getRecords());
