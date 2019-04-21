@@ -1,6 +1,5 @@
 package com.blog.utils.exception;
 
-import com.baomidou.mybatisplus.extension.api.R;
 import com.blog.utils.ResultMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,7 +25,7 @@ public class GlobalExceptionHandler {
         mav.addObject("exception", e);
         mav.addObject("msg", e.getMessage());
         mav.addObject("url", req.getRequestURL());
-        mav.setViewName("error");
+        mav.setViewName("error/error");
         return mav;
     }
 
