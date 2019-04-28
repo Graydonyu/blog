@@ -153,4 +153,11 @@ public class IndexController extends BaseController {
 
         return R.ok("登录成功");
     }
+
+    @ApiOperation("用户登出")
+    @GetMapping("/user/logout")
+    public String logout() {
+        SecurityUtils.getSubject().logout();
+        return "redirect:/";
+    }
 }

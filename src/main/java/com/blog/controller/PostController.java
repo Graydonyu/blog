@@ -39,7 +39,7 @@ public class PostController extends BaseController{
         Assert.notNull(post, "该文章已被删除");
 
         req.setAttribute("post", post);
-        return "post";
+        return "post/post";
     }
 }
 

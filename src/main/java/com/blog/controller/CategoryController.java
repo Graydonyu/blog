@@ -43,7 +43,7 @@ public class CategoryController extends BaseController {
 
         req.setAttribute("pageData", pageData);
         req.setAttribute("currentCategoryId", id);
-        return "category";
+        return "post/category";
     }
 }
 
