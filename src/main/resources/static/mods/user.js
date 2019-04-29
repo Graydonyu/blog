@@ -161,7 +161,7 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
   }
 
   //上传图片
-  if($('.upload-img')[0]){
+  /*if($('.upload-img')[0]){
     layui.use('upload', function(upload){
       var avatarAdd = $('.avatar-add');
 
@@ -189,7 +189,33 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
         }
       });
     });
-  }
+  }*/
+    //上传图片
+    if($('.upload-img')[0]){
+        layui.use('upload', function(upload){
+            var avatarAdd = $('.avatar-add');
+
+            upload.render({
+                elem: '.upload-img'
+                ,url: '/user/upload/'
+                ,size: 50
+                ,before: function(){
+                    avatarAdd.find('.loading').show();
+                }
+                ,done: function(res){
+                    if(res.code == 0){
+                        location.reload();
+                    } else {
+                        layer.msg(res.msg, {icon: 5});
+                    }
+                    avatarAdd.find('.loading').hide();
+                }
+                ,error: function(){
+                    avatarAdd.find('.loading').hide();
+                }
+            });
+        });
+    }
 
   //合作平台
   if($('#LAY_coop')[0]){

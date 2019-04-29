@@ -31,7 +31,7 @@
                         <a href="/login">登入</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="/register">注册</a>
+                        <a href="/reg">注册</a>
                     </li>
                     <li class="layui-nav-item layui-hide-xs">
                         <a href="/app/qq/" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" title="QQ登入" class="iconfont icon-qq"></a>
@@ -57,7 +57,7 @@
                         <dl class="layui-nav-child">
                             <dd><a href="/user/setting"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
                             <dd><a href="/user/message"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
-                            <dd><a th:href="@{'/u/' + ${session.profile.id}}" ><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
+                            <dd><a th:href="@{'/user/' + ${session.profile.id}}" ><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
                             <hr style="margin: 5px 0;">
                             <dd><a href="/user/logout" style="text-align: center;">退出</a></dd>
                         </dl>
@@ -88,16 +88,16 @@
                 </li>
 
                 <!-- 用户登入后显示 -->
-                <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html">我发表的贴</a></li>
-                <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html#collection">我收藏的贴</a></li>
+                <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/center">我发表的贴</a></li>
+                <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/collection">我收藏的贴</a></li>
             </ul>
 
             <div class="fly-column-right layui-hide-xs">
                 <span class="fly-search"><i class="layui-icon"></i></span>
-                <a href="jie/add.html" class="layui-btn">发表新帖</a>
+                <a href="/post/add" class="layui-btn">发表新帖</a>
             </div>
             <div class="layui-hide-sm layui-show-xs-block" style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
-                <a href="jie/add.html" class="layui-btn">发表新帖</a>
+                <a href="/post/add" class="layui-btn">发表新帖</a>
             </div>
         </div>
     </div>
