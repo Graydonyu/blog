@@ -49,6 +49,11 @@ public class User extends Entity {
          private Integer point;
 
         /**
+     * 个性签名
+     */
+         private String sign;
+
+        /**
      * 性别
      */
          private String gender;
@@ -57,6 +62,11 @@ public class User extends Entity {
      * 微信号
      */
          private String wechat;
+
+        /**
+     * vip等级
+     */
+        private String vipLevel;
 
         /**
      * 生日

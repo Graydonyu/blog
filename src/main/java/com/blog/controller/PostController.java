@@ -6,6 +6,7 @@ import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.blog.entity.Post;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,19 @@ public class PostController extends BaseController{
 
         req.setAttribute("post", post);
         return "post/post";
+    }
+
+    @GetMapping("/add")
+    public String getPost() {
+
+        String id = req.getParameter("id");
+        if(!StringUtils.isEmpty(id)) {
+            Post post = postService.getById(Long.valueOf(id));
+            if(post != null)
+                req.setAttribute("post", post);
+        }
+
+        return "post/add";
     }
 }
 

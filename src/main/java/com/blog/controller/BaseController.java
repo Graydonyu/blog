@@ -3,7 +3,9 @@ package com.blog.controller;
 import com.blog.service.CategoryService;
 import com.blog.service.PostService;
 import com.blog.service.UserService;
+import com.blog.shiro.AccountProfile;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -31,4 +33,12 @@ public class BaseController {
 
     @Autowired
     CategoryService categoryService;
+
+    protected AccountProfile getProfile() {
+        return (AccountProfile) SecurityUtils.getSubject().getPrincipal();
+    }
+
+    protected Long getProfileId() {
+        return getProfile().getId();
+    }
 }
