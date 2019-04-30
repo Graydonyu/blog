@@ -1,5 +1,6 @@
 package com.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.blog.entity.core.Entity;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@TableName("category")
 public class Category extends Entity {
 
         /**

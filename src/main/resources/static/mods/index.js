@@ -153,7 +153,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
             ,success: function(layero, index){
               var image =  layero.find('input[name="image"]');
 
-              //执行上传实例
+              /*//执行上传实例
               upload.render({
                 elem: '#uploadImg'
                 ,url: '/api/upload/'
@@ -165,7 +165,23 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
                     layer.msg(res.msg, {icon: 5});
                   }
                 }
-              });
+              });*/
+              //执行上传实例
+                  upload.render({
+                      elem: '#uploadImg'
+                      ,url: '/user/upload/'
+                      ,size: 200
+                      ,data: {
+                          type: 'post'
+                      }
+                      ,done: function(res){
+                          if(res.code == 0){
+                              image.val(res.data);
+                          } else {
+                              layer.msg(res.msg, {icon: 5});
+                          }
+                      }
+                  });
               
               form.on('submit(uploadImages)', function(data){
                 var field = data.field;

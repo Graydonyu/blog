@@ -1,6 +1,8 @@
 package com.blog.controller;
 
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,7 +85,8 @@ public class UserController extends BaseController {
      */
     @ResponseBody
     @PostMapping("/upload")
-    public R upload(@RequestParam(value = "file") MultipartFile file) throws Exception {
+    public R upload(@RequestParam(value = "file") MultipartFile file,
+                    @RequestParam(name="type", defaultValue = "avatar") String type) throws Exception{
 
         if(file.isEmpty()) {
             return R.failed("上传失败");
@@ -97,14 +101,18 @@ public class UserController extends BaseController {
         // 文件上传后的路径
         String filePath = Constant.uploadDir;
 
-        fileName = "avatar_" + getProfileId() + suffixName;
+        if ("avatar".equalsIgnoreCase(type)) {
+            fileName = "/avatar/avatar_" + getProfileId() + suffixName;
+
+        } else if ("post".equalsIgnoreCase(type)) {
+            fileName = "/post/post_" + DateUtil.format(new Date(), DatePattern.PURE_DATETIME_MS_PATTERN) + suffixName;
+        }
+
         File dest = new File(filePath + fileName);
         // 检测是否存在目录
         if (!dest.getParentFile().exists()) {
             dest.getParentFile().mkdirs();
         }
-
-
         file.transferTo(dest);
         log.info("上传成功后的文件路径未：" + filePath + fileName);
 
@@ -113,13 +121,15 @@ public class UserController extends BaseController {
 
         log.info("url ---> {}", url);
 
-        User current = userService.getById(getProfileId());
-        current.setAvatar(url);
-        userService.updateById(current);
+        if ("avatar".equalsIgnoreCase(type)) {
+            User current = userService.getById(getProfileId());
+            current.setAvatar(url);
+            userService.updateById(current);
 
-        //更新shiro的信息
-        AccountProfile profile = getProfile();
-        profile.setAvatar(url);
+            //更新shiro的信息
+            AccountProfile profile = getProfile();
+            profile.setAvatar(url);
+        }
 
         return R.ok(url);
     }
@@ -170,6 +180,20 @@ public class UserController extends BaseController {
         req.setAttribute("pageData", pageData);
 
         return "user/message";
+    }
+
+    @ResponseBody
+    @PostMapping("/message/remove")
+    public R removeMsg(Long id, boolean all) {
+
+        QueryWrapper<UserMessage> warapper = new QueryWrapper<UserMessage>()
+                .eq("to_user_id", getProfileId())
+                .eq(!all,"id", id);
+
+        //只能删除自己的消息
+        boolean res = userMessageService.remove(warapper);
+
+        return res ? R.ok(null) : R.failed("删除失败");
     }
 }
 
