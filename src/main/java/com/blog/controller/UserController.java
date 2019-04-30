@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.entity.Post;
 import com.blog.entity.User;
+import com.blog.entity.UserCollection;
+import com.blog.entity.UserMessage;
 import com.blog.shiro.AccountProfile;
 import com.blog.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
@@ -49,14 +51,18 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("/collection")
-    public String collection( @RequestParam(defaultValue = "1") Integer current,
-                              @RequestParam(defaultValue = "10")Integer size) {
+    public String collection(@RequestParam(defaultValue = "1") Integer current,
+                             @RequestParam(defaultValue = "10")Integer size) {
 
-        Page<Post> page = new Page<>();
+        Page<UserCollection> page = new Page<>();
         page.setCurrent(current);
         page.setSize(size);
 
-        req.setAttribute("pageData", new Page());
+        IPage<Map<String, Object>> pageData = userCollectionService.pageMaps(page, new QueryWrapper<UserCollection>().eq("user_id", getProfileId()).orderByDesc("created"));
+
+        postService.join(pageData, "post_id");
+
+        req.setAttribute("pageData", pageData);
 
         return "user/collection";
     }
@@ -144,7 +150,25 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("/message")
-    public String message() {
+    public String message(@RequestParam(defaultValue = "1") Integer current,
+                          @RequestParam(defaultValue = "10")Integer size) {
+        Page<UserMessage> page = new Page<>();
+        page.setCurrent(current);
+        page.setSize(size);
+
+        IPage<Map<String, Object>> pageData = userMessageService.pageMaps(page, new QueryWrapper<UserMessage>()
+                .eq("to_user_id", getProfileId())
+                .orderByDesc("created"));
+
+        userService.join(pageData, "from_user_id");
+
+        //评论你文章的提示
+        postService.join(pageData, "post_id");
+        //评论你的评论的提示
+        commentService.join(pageData, "comment_id");
+
+        req.setAttribute("pageData", pageData);
+
         return "user/message";
     }
 }

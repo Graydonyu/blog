@@ -1,7 +1,6 @@
 package com.blog.service;
 
 import com.blog.entity.Post;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
@@ -11,6 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author ygd
  * @since 2019-03-22
  */
-public interface PostService extends IService<Post> {
-
+public interface PostService extends BaseService<Post> {
 }

@@ -1,8 +1,6 @@
 package com.blog.controller;
 
-import com.blog.service.CategoryService;
-import com.blog.service.PostService;
-import com.blog.service.UserService;
+import com.blog.service.*;
 import com.blog.shiro.AccountProfile;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -33,6 +31,15 @@ public class BaseController {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    CommentService commentService;
+
+    @Autowired
+    UserCollectionService userCollectionService;
+
+    @Autowired
+    UserMessageService userMessageService;
 
     protected AccountProfile getProfile() {
         return (AccountProfile) SecurityUtils.getSubject().getPrincipal();

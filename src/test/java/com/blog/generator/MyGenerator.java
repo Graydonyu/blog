@@ -40,8 +40,8 @@ public class MyGenerator {
         dsc.setDbType(DbType.MYSQL);
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("root");
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/blog?characterEncoding=utf8&useSSL=true");
+        dsc.setPassword("zxc123456");
+        dsc.setUrl("jdbc:mysql://139.196.72.211:3306/blog");
         mpg.setDataSource(dsc);
 
         // 策略配置
@@ -49,7 +49,7 @@ public class MyGenerator {
 //        strategy.setTablePrefix(new String[]{""});// 此处可以修改为您的表前缀
 //        strategy.setNaming(NamingStrategy.remove_prefix_and_camel);// 表名生成策略
 //        strategy.setNaming(NamingStrategy.removePrefixAndCamel());// 表名生成策略
-        strategy.setInclude(new String[]{"user","category","comment","post"}); // 需要生成的表
+        strategy.setInclude(new String[]{"user_collection","user_message"}); // 需要生成的表
 //        strategy.setExclude(new String[]{"t_rong_bid"}); // 排除生成的表
         // 字段名生成策略
         strategy.setNaming(NamingStrategy.underline_to_camel);
@@ -58,13 +58,13 @@ public class MyGenerator {
         // 自定义实体，公共字段
         //strategy.setSuperEntityColumns(new String[]{"id","created","modified"});
         // 自定义 mapper 父类
-        // strategy.setSuperMapperClass("com.fcs.demo.TestMapper");
+        strategy.setSuperMapperClass("com.baomidou.mybatisplus.core.mapper.BaseMapper");
         // 自定义 service 父类
-        // strategy.setSuperServiceClass("com.fcs.demo.TestService");
+        strategy.setSuperServiceClass("com.blog.service.BaseService");
         // 自定义 service 实现类父类
-        // strategy.setSuperServiceImplClass("com.fcs.demo.TestServiceImpl");
+        strategy.setSuperServiceImplClass("com.blog.service.impl.BaseServiceImpl");
         // 自定义 controller 父类
-//         strategy.setSuperControllerClass("com.risk.controller.BaseController");
+        strategy.setSuperControllerClass("com.blog.controller.BaseController");
         // 【实体】是否生成字段常量（默认 false）
         // public static final String ID = "test_id";
         // strategy.setEntityColumnConstant(true);
