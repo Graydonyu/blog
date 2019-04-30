@@ -40,11 +40,13 @@ public class PostController extends BaseController{
 
         if(CollectionUtil.isNotEmpty(post)){
             userService.join(post,"user_id");
+            categoryService.join(post, "category_id");
         }
 
         Assert.notNull(post, "该文章已被删除");
 
         req.setAttribute("post", post);
+        req.setAttribute("currentCategoryId", post.get("category_id"));
         return "post/post";
     }
 
