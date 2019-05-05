@@ -1,5 +1,6 @@
 package com.blog.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.blog.entity.Comment;
 import com.blog.mapper.CommentMapper;
 import com.blog.service.CommentService;
@@ -22,6 +23,9 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> 
 
     @Override
     public void join(Map<String, Object> map, String field) {
+        if(CollectionUtil.isEmpty(map) || map.get(field) == null){
+            return;
+        }
 
         Map<String, Object> joinColumns = new HashMap<>();
 

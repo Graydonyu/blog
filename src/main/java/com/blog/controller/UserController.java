@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -146,6 +147,21 @@ public class UserController extends BaseController {
 
     @RequestMapping("/{id}")
     public String home(@PathVariable Long id) {
+
+        User user = userService.getById(id);
+        user.setPassword(null);
+
+        //30天内容的文章
+        Date date30Before = DateUtil.offsetDay(new Date(), -30).toJdkDate();
+        List<Post> posts = postService.list(new QueryWrapper<Post>()
+                .eq("user_id", id)
+                .ge("created", date30Before)
+                .orderByDesc("created"));
+
+        //TODO 动作记录
+
+        req.setAttribute("user", user);
+        req.setAttribute("posts", posts);
 
         return "user/home";
     }

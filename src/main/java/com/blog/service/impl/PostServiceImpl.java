@@ -1,5 +1,6 @@
 package com.blog.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import com.blog.entity.Post;
 import com.blog.mapper.PostMapper;
@@ -23,11 +24,11 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
 
     @Override
     public void join(Map<String, Object> map, String field) {
-        Map<String, Object> joinColumns = new HashMap<>();
-
-        if(map.get(field) == null) {
+        if(CollectionUtil.isEmpty(map) || map.get(field) == null){
             return;
         }
+
+        Map<String, Object> joinColumns = new HashMap<>();
 
         //字段的值
         String linkfieldValue = map.get(field).toString();

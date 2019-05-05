@@ -538,7 +538,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
   //发送激活邮件
   fly.activate = function(email){
     fly.json('/api/activate/', {}, function(res){
-      if(res.status === 0){
+      if(res.code === 0){
         layer.alert('已成功将激活链接发送到了您的邮箱，接受可能会稍有延迟，请注意查收。', {
           icon: 1
         });
@@ -573,7 +573,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
           fly.form[action||button.attr('key')](data.field, data.form);
         }
       };
-      if(res.status == 0){
+      if(res.code == 0){
         button.attr('alert') ? layer.alert(res.msg, {
           icon: 1,
           time: 10*1000,

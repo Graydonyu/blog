@@ -1,5 +1,6 @@
 package com.blog.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.blog.entity.Category;
 import com.blog.mapper.CategoryMapper;
 import com.blog.service.CategoryService;
@@ -22,6 +23,10 @@ public class CategoryServiceImpl extends BaseServiceImpl<CategoryMapper, Categor
 
     @Override
     public void join(Map<String,Object> map,String field){
+        if(CollectionUtil.isEmpty(map) || map.get(field) == null){
+            return;
+        }
+
         Map<String, Object> joinColumns = new HashMap<>();
         //字段的值
         String linkfieldValue = map.get(field).toString();

@@ -1,6 +1,7 @@
 package com.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -36,6 +37,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
     @Override
     public void join(Map<String, Object> map, String linkfield) {
+        if(CollectionUtil.isEmpty(map) || map.get(linkfield) == null){
+            return;
+        }
+
         String userId = map.get(linkfield).toString();
         User user = this.getById(userId);
 
@@ -43,6 +48,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         author.put("id", user.getId());
         author.put("username", user.getUsername());
         author.put("avatar", user.getAvatar());
+        author.put("vipLevel", user.getVipLevel());
 
         map.put("author", author);
     }

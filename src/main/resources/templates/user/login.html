@@ -84,7 +84,7 @@
                 <img id="captcha" src="/captcha">
               </div>-->
               <div class="layui-form-item">
-                <button class="layui-btn" lay-filter="*" lay-submit>立即登录</button>
+                <button class="layui-btn" lay-filter="login" lay-submit>立即登录</button>
                 <span style="padding-left:20px;">
                   <a href="/forget">忘记密码？</a>
                 </span>
@@ -124,9 +124,9 @@
       var form = layui.form;
       var layer = layui.layer;
 
-        form.on('submit(*)',function (data) {
+        form.on('submit(login)',function (data) {
             layui.$.post('/login',data.field,function (res) {
-              if(res.code == 0){
+              if(res.code === 0){
               location.href="/user/center";
             } else {
               layer.msg(res.msg);

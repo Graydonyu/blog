@@ -1,19 +1,20 @@
 package com.blog.controller;
 
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.entity.Category;
+import com.blog.entity.Comment;
 import com.blog.entity.Post;
 import com.blog.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.stereotype.Controller;
 
 import javax.validation.Valid;
 import java.util.Date;
@@ -34,19 +35,34 @@ import java.util.Map;
 public class PostController extends BaseController{
 
     @GetMapping("/{id}")
-    public String getPostDetail(@PathVariable Long id){
+    public String getPostDetail(@PathVariable Long id,
+                                @RequestParam(defaultValue = "1") Integer current,
+                                @RequestParam(defaultValue = "10")Integer size){
 
         Map<String, Object> post = postService.getMap(new QueryWrapper<Post>().eq("id", id));
 
-        if(CollectionUtil.isNotEmpty(post)){
-            userService.join(post,"user_id");
-            categoryService.join(post, "category_id");
-        }
+        userService.join(post, "user_id");
+        categoryService.join(post, "category_id");
 
         Assert.notNull(post, "该文章已被删除");
 
         req.setAttribute("post", post);
         req.setAttribute("currentCategoryId", post.get("category_id"));
+
+
+        Page<Comment> page = new Page<>();
+        page.setCurrent(current);
+        page.setSize(size);
+
+        IPage<Map<String, Object>> pageData = commentService.pageMaps(page, new QueryWrapper<Comment>()
+                .eq("post_id", id)
+                .orderByDesc("created"));
+
+        userService.join(pageData, "user_id");
+        commentService.join(pageData, "parent_id");
+
+        req.setAttribute("pageData", pageData);
+
         return "post/post";
     }
 
