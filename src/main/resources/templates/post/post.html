@@ -65,7 +65,7 @@
 
                         <shiro:user>
                             <span class="layui-btn layui-btn-xs jie-admin" type="edit" th:if="${session.profile.id == post.user_id}">
-                                <a th:href="@{/post/add(id=${post.id})}">编辑此贴</a>
+                                <a th:href="@{/post/execute/add(id=${post.id})}">编辑此贴</a>
                             </span>
                         </shiro:user>
                     </div>

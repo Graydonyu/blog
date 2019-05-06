@@ -90,7 +90,7 @@
             //监听提交
             form.on('submit(post)', function (data) {
                 $.ajax({
-                    url: '/post/publishPost',
+                    url: '/post/execute/publishPost',
                     type: "POST",
                     data: data.field,
                     success: function (res) {

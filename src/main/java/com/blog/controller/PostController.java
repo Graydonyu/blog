@@ -66,7 +66,7 @@ public class PostController extends BaseController{
         return "post/post";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/execute/add")
     public String getPost() {
 
         String id = req.getParameter("id");
@@ -87,7 +87,7 @@ public class PostController extends BaseController{
     }
 
     @ResponseBody
-    @PostMapping("/publishPost")
+    @PostMapping("/execute/publishPost")
     public R publishPost(@Valid Post post, BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()) {
