@@ -69,7 +69,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
         data: data,
         url: url,
         success: function(res){
-          if(res.status === 0) {
+          if(res.code === 0) {
             success && success(res);
           } else {
             layer.msg(res.msg || res.code, {shift: 6});
@@ -299,12 +299,12 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
         fly.json('/user/message/nums/', {
           _: new Date().getTime()
         }, function(res){
-          if(res.status === 0 && res.count > 0){
+          if(res.code === 0 && res.count > 0){
             var msg = $('<a class="fly-nav-msg" href="javascript:;">'+ res.count +'</a>');
             elemUser.append(msg);
             msg.on('click', function(){
               fly.json('/message/read', {}, function(res){
-                if(res.status === 0){
+                if(res.code === 0){
                   location.href = '/user/message/';
                 }
               });

@@ -139,7 +139,7 @@ public class UserController extends BaseController {
     @PostMapping("/message/nums")
     public Object getMessNums() {
         Map<String, Object> result = new HashMap<>();
-        result.put("status", 0);
+        result.put("code", 0);
         result.put("count", 2);
 
         return result;
