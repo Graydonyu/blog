@@ -9,10 +9,17 @@ spring:
     username: root
     password: zxc123456
   #Redis Config
-  #redis:
-      #sentinel:
-      #master: mymaster
-    #nodes: 47.106.38.101:26379,47.106.38.101:26380
+  redis:
+    post: 6379
+    host: 139.196.72.211
+    database: 0
+    jedis:
+      pool:
+        max-active: 50
+        max-idle: 50
+        max-wait: -1
+        min-idle: 0
+    timeout: 1000
 
 thymeleaf:
   cache: false

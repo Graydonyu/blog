@@ -78,7 +78,7 @@ layui.define('fly', function(exports){
         del: function(div){
             layer.confirm('确认删除该求解么？', function(index){
                 layer.close(index);
-                fly.json('/user/post/delete', {
+                fly.json('/post/execute/delete', {
                     id: div.data('id')
                 }, function(res){
                     if(res.code === 0){
@@ -107,7 +107,7 @@ layui.define('fly', function(exports){
         //收藏
         ,collect: function(div){
             var othis = $(this), type = othis.data('type');
-            fly.json('/user/post/collection/'+ type +'/', {
+            fly.json('/collection/'+ type +'/', {
                 postId: div.data('id')
             }, function(res){
                 if(type === 'add'){
@@ -207,9 +207,9 @@ layui.define('fly', function(exports){
             });
         }
         ,del: function(li){ //删除
-            layer.confirm('确认删除该回答么？', function(index){
+            layer.confirm('确认删除该评论么？', function(index){
                 layer.close(index);
-                fly.json('/user/post/comment/delete/', {
+                fly.json('/comment/delete/', {
                     id: li.data('id')
                 }, function(res){
                     if(res.code === 0){

@@ -2,6 +2,7 @@ package com.blog.controller;
 
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
@@ -12,14 +13,14 @@ import com.blog.entity.Post;
 import com.blog.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -122,5 +123,63 @@ public class PostController extends BaseController{
         return R.ok(post.getId());
     }
 
+    @ResponseBody
+    @Transactional
+    @PostMapping("/execute/delete")
+    public R postDelete(Long id) {
+        Post post = postService.getById(id);
+
+        Assert.isTrue(post != null, "该帖子已被删除");
+
+        Long profileId = getProfileId();
+        if(post.getUserId() != profileId) {
+            return R.failed("不能删除非自己的帖子");
+        }
+
+        postService.removeById(id);
+
+        // 同时删除所有的相关收藏
+        userCollectionService.removeByMap(MapUtil.of("post_id", id));
+
+        return R.ok(null);
+    }
+
+    /**
+     * 思路：
+     * 项目启动初始化最近7天发表文章的评论数量，
+     * 发表评论给对应点的文章添加comment-count。同时设置有效期。
+     *
+     * 命令使用：
+     * 1、ZINCRBY rank:20181020 5 1
+     * 2、ZRANGE rank:20181020 0 -1 withscores
+     * 3、ZREVRANGE rank:20181220 0 -1 withsroces
+     * 4、ZINCRBY rank:20181019 99 1
+     * 统计
+     * 5、ZUNIONSTORE rank:last_week 7 rank:20181019 rank:20181020 rank:20181021 weights 1 1 1
+     * 6、ZREVRANGE rank:last_week 0 -1 withscores
+     * 设定有效期
+     * 7、ttl rank:last_week
+     * 8、expire rank:last_week 60*60*24*7
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("/hots")
+    public R hotPost() {
+
+        Set<ZSetOperations.TypedTuple> lastWeekRank = redisUtil.getZSetRank("last_week_rank", 0, 6);
+
+        List<Map<String, Object>> hotPosts = new ArrayList<>();
+        for (ZSetOperations.TypedTuple typedTuple : lastWeekRank) {
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("comment_count", typedTuple.getScore());
+            map.put("id", redisUtil.hget("rank_post_" + typedTuple.getValue(), "post:id"));
+            map.put("title", redisUtil.hget("rank_post_" + typedTuple.getValue(), "post:title"));
+
+            hotPosts.add(map);
+        }
+
+        return R.ok(hotPosts);
+    }
 }
 

@@ -2,6 +2,7 @@ package com.blog.controller;
 
 import com.blog.service.*;
 import com.blog.shiro.AccountProfile;
+import com.blog.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class BaseController {
 
     @Autowired
     UserMessageService userMessageService;
+
+    @Autowired
+    RedisUtil redisUtil;
 
     protected AccountProfile getProfile() {
         return (AccountProfile) SecurityUtils.getSubject().getPrincipal();

@@ -3,6 +3,7 @@ package com.blog.controller;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
@@ -173,6 +174,23 @@ public class UserController extends BaseController {
 
         req.setAttribute("user", user);
         return "user/setting";
+    }
+
+    @ResponseBody
+    @PostMapping("/resetPwd")
+    public R resetPwd(String nowpass, String pass) {
+
+        User user = userService.getById(getProfileId());
+
+        String nowPassMd5 = SecureUtil.md5(nowpass);
+        if(!nowPassMd5.equals(user.getPassword())) {
+            return R.failed("密码不正确");
+        }
+
+        user.setPassword(SecureUtil.md5(pass));
+        userService.updateById(user);
+
+        return R.ok(null);
     }
 
     @GetMapping("/message")
