@@ -45,6 +45,13 @@ public class CommentController extends BaseController {
         comment.setStatus(Constant.NORMAL_STATUS);
         commentService.save(comment);
 
+        //评论数加一
+        post.setCommentCount(post.getCommentCount() + 1);
+        postService.saveOrUpdate(post);
+
+        //更新首页排版的评论数量
+        postService.incrZsetValueAndUnionForLastWeekRank(comment.getPostId());
+
         // TODO 记录动作
 
         // TODO 通知作者
