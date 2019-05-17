@@ -17,6 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ import java.util.Map;
  */
 @Slf4j
 @Service
+@Transactional
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements UserService {
 
     @Override

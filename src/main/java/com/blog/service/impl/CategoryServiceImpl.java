@@ -6,6 +6,7 @@ import com.blog.mapper.CategoryMapper;
 import com.blog.service.CategoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,7 @@ import java.util.Map;
  * @since 2019-03-22
  */
 @Service
+@Transactional
 public class CategoryServiceImpl extends BaseServiceImpl<CategoryMapper, Category> implements CategoryService {
 
     @Override

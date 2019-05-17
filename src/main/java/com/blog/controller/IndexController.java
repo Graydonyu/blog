@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
@@ -56,10 +57,11 @@ public class IndexController extends BaseController {
 
     @ApiOperation("首页")
     @GetMapping("/")
-    public String index() {
+    public String index(@RequestParam(defaultValue = "1") Integer current,
+                        @RequestParam(defaultValue = "10")Integer size) {
         Page<Post> page = new Page<>();
-        page.setCurrent(1);
-        page.setSize(10);
+        page.setCurrent(current);
+        page.setSize(size);
 
         //置顶文章（取5条）
         List<Map<String, Object>> levelPosts = postService.listMaps(new QueryWrapper<Post>().orderByDesc("level").last("limit 5"));
@@ -72,6 +74,7 @@ public class IndexController extends BaseController {
 
         //添加关联的用户信息
         userService.join(pageData, "user_id");
+        categoryService.join(pageData, "category_id");
 
         req.setAttribute("levelPosts",levelPosts);
         req.setAttribute("pageData", pageData);

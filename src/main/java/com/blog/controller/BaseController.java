@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @Controller
+@Transactional
 public class BaseController {
     @Autowired
     HttpServletRequest req;

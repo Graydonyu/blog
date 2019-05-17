@@ -177,6 +177,27 @@ public class UserController extends BaseController {
     }
 
     @ResponseBody
+    @PostMapping("/setting")
+    public R postSetting(User user) {
+        User tempUser = userService.getById(getProfileId());
+//        tempUser.setEmail(user.getEmail());
+        tempUser.setUsername(user.getUsername());
+        tempUser.setGender(user.getGender());
+        tempUser.setSign(user.getSign());
+        tempUser.setMobile(user.getMobile());
+
+        boolean isSucc = userService.updateById(tempUser);
+        if(isSucc) {
+            //更新shiro的信息
+            AccountProfile profile = getProfile();
+            profile.setUsername(user.getUsername());
+            profile.setGender(user.getGender());
+        }
+
+        return isSucc ? R.ok(user): R.failed("更新失败");
+    }
+
+    @ResponseBody
     @PostMapping("/resetPwd")
     public R resetPwd(String nowpass, String pass) {
 

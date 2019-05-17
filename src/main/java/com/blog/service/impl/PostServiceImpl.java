@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.blog.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -24,6 +25,7 @@ import java.util.*;
  * @since 2019-03-22
  */
 @Service
+@Transactional
 public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implements PostService {
 
     @Autowired

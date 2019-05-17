@@ -4,6 +4,7 @@ import com.blog.entity.UserMessage;
 import com.blog.mapper.UserMessageMapper;
 import com.blog.service.UserMessageService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
  * @since 2019-04-30
  */
 @Service
+@Transactional
 public class UserMessageServiceImpl extends BaseServiceImpl<UserMessageMapper, UserMessage> implements UserMessageService {
 
 }
