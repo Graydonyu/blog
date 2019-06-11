@@ -1,5 +1,9 @@
 server:
   port: 8096
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8091/eureka/
 
 # DataSource Config
 spring:
@@ -31,6 +35,8 @@ spring:
         max-wait: -1
         min-idle: 0
     timeout: 1000
+  application:
+    name: blog-master
 
 thymeleaf:
   cache: false

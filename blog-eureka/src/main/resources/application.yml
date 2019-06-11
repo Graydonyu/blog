@@ -7,7 +7,7 @@ server:
 
 eureka:
   server:
-    #enableSelfPreservation: false   关闭自我保护模式
+    #enableSelfPreservation: false   #关闭自我保护模式
     evictionIntervalTimerInMs: 4000      #过期实例应该启动并运行的时间间隔，单位为毫秒，默认为60 * 1000
   instance:
     hostname: localhost

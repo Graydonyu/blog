@@ -25,6 +25,7 @@
 		<module>blog-search</module>
 		<module>blog-common</module>
 		<module>blog-eureka</module>
+		<module>blog-gatway</module>
 	</modules>
 
 	<properties>

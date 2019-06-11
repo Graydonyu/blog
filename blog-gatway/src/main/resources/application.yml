@@ -1,0 +1,20 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: blog-gatway
+  http:
+    multipart:
+      maxFileSize: 100Mb
+      maxRequestSize: 1000Mb
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8091/eureka/
+
+zuul:
+  routes:
+    blog-master:
+      path: /**
+      serviceId: blog-master

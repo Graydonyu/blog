@@ -9,11 +9,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-
     <groupId>com.blog</groupId>
-    <artifactId>blog-search</artifactId>
+    <artifactId>blog-gatway</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>blog-search</name>
+    <name>blog-gatway</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -24,6 +23,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
         </dependency>
     </dependencies>
 
