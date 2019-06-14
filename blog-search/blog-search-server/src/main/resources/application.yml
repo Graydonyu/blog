@@ -1,0 +1,20 @@
+server:
+  port: 8095
+spring:
+  application:
+    name: blog-search
+  data:
+    elasticsearch:
+      cluster-name: node-1
+      cluster-nodes: 139.196.72.211:9200
+      repositories:
+        enabled: true
+  rabbitmq:
+    host: 139.196.72.211
+    port: 5672
+    username: ygd
+    password: 123456
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8091/eureka/
