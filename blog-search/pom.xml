@@ -13,7 +13,7 @@
         <groupId>com.blog</groupId>
         <artifactId>blog</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <!--<relativePath>../pom.xml</relativePath>-->
     </parent>
 
 
@@ -26,10 +26,6 @@
     <properties>
         <java.version>10</java.version>
     </properties>
-
-    <dependencies>
-
-    </dependencies>
 
     <build>
         <plugins>
