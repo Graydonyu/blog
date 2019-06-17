@@ -6,6 +6,7 @@
         <artifactId>blog-search</artifactId>
         <groupId>com.blog</groupId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -45,7 +46,11 @@
             <groupId>com.blog</groupId>
             <artifactId>blog-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.blog</groupId>
+            <artifactId>blog-search-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

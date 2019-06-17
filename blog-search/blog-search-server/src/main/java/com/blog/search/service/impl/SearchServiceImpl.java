@@ -1,6 +1,7 @@
 package com.blog.search.service.impl;
 
 import com.blog.search.common.IndexKey;
+import com.blog.search.dto.PostMqIndexMessage;
 import com.blog.search.model.PostDocument;
 import com.blog.search.repository.PostRepository;
 import com.blog.search.service.SearchService;
@@ -45,5 +46,15 @@ public class SearchServiceImpl implements SearchService {
                 keyWord, postDocuments.getTotalElements(), postDocuments.getTotalPages());
 
         return postDocuments;
+    }
+
+    @Override
+    public void createOrUpdateIndex(PostMqIndexMessage message) {
+
+    }
+
+    @Override
+    public void removeIndex(PostMqIndexMessage message) {
+
     }
 }

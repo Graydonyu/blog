@@ -1,5 +1,6 @@
 package com.blog.search.service;
 
+import com.blog.search.dto.PostMqIndexMessage;
 import com.blog.search.model.PostDocument;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,4 +11,8 @@ import org.springframework.data.domain.Pageable;
 public interface SearchService {
 
     Page<PostDocument> query(Pageable pageable, String keyWord);
+
+    void createOrUpdateIndex(PostMqIndexMessage message);
+
+    void removeIndex(PostMqIndexMessage message);
 }
