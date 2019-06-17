@@ -1,9 +1,0 @@
-server:
-  port: 8093
-spring:
-  application:
-    name: blog-common
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8091/eureka/
