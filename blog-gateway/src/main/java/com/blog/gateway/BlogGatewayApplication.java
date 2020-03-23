@@ -1,4 +1,4 @@
-package com.blog.gatway;
+package com.blog.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,10 +12,10 @@ import org.springframework.web.filter.CorsFilter;
 @EnableZuulProxy
 @EnableEurekaClient
 @SpringBootApplication
-public class BlogGatwayApplication {
+public class BlogGatewayApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BlogGatwayApplication.class, args);
+        SpringApplication.run(BlogGatewayApplication.class, args);
     }
 
     @Bean
