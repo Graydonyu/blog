@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @Controller
-@Transactional
 public class BaseController {
     @Autowired
     HttpServletRequest req;

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @Transactional
-public class BaseServiceImpl<M extends BaseMapper<T>,T> extends ServiceImpl<M,T> implements BaseService<T> {
+public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements BaseService<T> {
     @Override
     public void join(Map<String, Object> map, String field) {
 
@@ -19,9 +19,9 @@ public class BaseServiceImpl<M extends BaseMapper<T>,T> extends ServiceImpl<M,T>
 
     @Override
     public void join(List<Map<String, Object>> datas, String field) {
-        if(CollectionUtil.isNotEmpty(datas)){
+        if (CollectionUtil.isNotEmpty(datas)) {
             datas.forEach(map -> {
-                this.join(map,field);
+                this.join(map, field);
             });
         }
     }
@@ -29,6 +29,6 @@ public class BaseServiceImpl<M extends BaseMapper<T>,T> extends ServiceImpl<M,T>
     @Override
     public void join(IPage pageData, String field) {
         List<Map<String, Object>> records = pageData.getRecords();
-        this.join(records,field);
+        this.join(records, field);
     }
 }
