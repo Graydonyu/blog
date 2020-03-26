@@ -7,6 +7,7 @@ import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.blog.entity.Post;
 import com.blog.mapper.PostMapper;
+import com.blog.search.dto.PostDTO;
 import com.blog.service.PostService;
 import com.blog.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
 
     @Autowired
     RedisUtil redisUtil;
+
+    @Autowired
+    PostMapper postMapper;
 
     @Override
     public void join(Map<String, Object> map, String field) {
@@ -131,5 +135,10 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
             redisUtil.hset("rank_post_" + post.getId(), "post:title", post.getTitle(), expireTime);
             //redisUtil.hset("rank_post_" + post.getId(), "post:comment_count", post.getCommentCount(), expireTime);
         }
+    }
+
+    @Override
+    public PostDTO findPostDTOById(long postId) {
+        return postMapper.findPostDTOById(postId);
     }
 }

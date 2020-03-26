@@ -18,10 +18,11 @@ public class PostDocument implements Serializable {
     @Id
     private Long id;
 
-    @Field(type = FieldType.Text)
+    //使用ik中文分词器，计算生成索引时尽量分细，查找时分词尽量粗粒度
+    @Field(type = FieldType.Text,analyzer = "ik_max_word",searchAnalyzer = "ik_smart")
     private String title;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text,analyzer = "ik_max_word",searchAnalyzer = "ik_smart")
     private String description;
 
     private Long authorId;

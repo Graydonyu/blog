@@ -1,6 +1,7 @@
 package com.blog.service;
 
 import com.blog.entity.Post;
+import com.blog.search.dto.PostDTO;
 
 /**
  * <p>
@@ -28,4 +29,10 @@ public interface PostService extends BaseService<Post> {
      * @param postId
      */
     void incrZsetValueAndUnionForLastWeekRank(Long postId);
+
+    /**
+     * 根据id查询帖子，并交给搜索服务使用
+     * @param postId
+     */
+    PostDTO findPostDTOById(long postId);
 }

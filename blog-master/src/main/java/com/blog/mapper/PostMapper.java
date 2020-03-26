@@ -2,6 +2,7 @@ package com.blog.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.blog.entity.Post;
+import com.blog.search.dto.PostDTO;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.blog.entity.Post;
  */
 public interface PostMapper extends BaseMapper<Post> {
 
+    PostDTO findPostDTOById(long postId);
 }

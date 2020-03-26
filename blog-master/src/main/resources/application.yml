@@ -45,3 +45,6 @@ logging:
   level:
     root: INFO
     org.springframework.web: DEBUG
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**Mapper.xml
