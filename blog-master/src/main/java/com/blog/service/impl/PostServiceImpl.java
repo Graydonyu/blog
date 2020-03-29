@@ -5,6 +5,8 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.entity.Post;
 import com.blog.mapper.PostMapper;
 import com.blog.search.dto.PostDTO;
@@ -154,5 +156,10 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
         }else{
             postMap.put("view_count",viewCount);
         }
+    }
+
+    @Override
+    public IPage<PostDTO> findPostDTOByPage(Page<PostDTO> page, String keyword) {
+        return postMapper.findPostDTOByPage(page, keyword);
     }
 }

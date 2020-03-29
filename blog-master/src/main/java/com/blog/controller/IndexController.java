@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.entity.Post;
 import com.blog.entity.User;
+import com.blog.search.dto.SearchResultDTO;
 import com.google.code.kaptcha.Producer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,9 +18,11 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -156,5 +159,19 @@ public class IndexController extends BaseController {
     public String logout() {
         SecurityUtils.getSubject().logout();
         return "redirect:/";
+    }
+
+    @RequestMapping("/search")
+    public String search(@RequestParam(defaultValue = "1") int current,
+                         @RequestParam(defaultValue = "10")int size,
+                         String keyword, Model model) {
+
+        R<SearchResultDTO> results = blogSearchClient.search(current, size, keyword);
+
+        log.info("搜索结果-----> {}",  results.getData());
+
+        model.addAttribute("pageData", results.getData());
+
+        return "search";
     }
 }

@@ -1,5 +1,7 @@
 package com.blog.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.entity.Post;
 import com.blog.search.dto.PostDTO;
 
@@ -43,4 +45,10 @@ public interface PostService extends BaseService<Post> {
      * @param postMap
      */
     void setViewCount(Map<String, Object> postMap);
+
+    /**
+     * 分页查询所有帖子，提供给搜索服务
+     * @param page
+     */
+    IPage<PostDTO> findPostDTOByPage(Page<PostDTO> page, String keyword);
 }

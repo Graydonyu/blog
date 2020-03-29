@@ -1,5 +1,7 @@
 package com.blog.controller;
 
+import com.blog.client.BlogSearchClient;
+import com.blog.feign.BlogSearchClient;
 import com.blog.service.*;
 import com.blog.shiro.AccountProfile;
 import com.blog.utils.RedisUtil;
@@ -7,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,6 +46,9 @@ public class BaseController {
 
     @Autowired
     RedisUtil redisUtil;
+
+    @Autowired
+    BlogSearchClient blogSearchClient;
 
     protected AccountProfile getProfile() {
         return (AccountProfile) SecurityUtils.getSubject().getPrincipal();

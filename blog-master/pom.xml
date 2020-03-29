@@ -25,7 +25,13 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
-        <!-- thymeleaf页面模板-->
+        <!-- feign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!-- thymeleaf页面模板 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>

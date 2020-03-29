@@ -20,6 +20,8 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -96,5 +98,22 @@ public class SearchServiceImpl implements SearchService {
         postRepository.deleteById(postId);
 
         log.info("es 索引删除成功！ --> {}" , message.toString());
+    }
+
+    @Override
+    public int initEsIndex(List<PostDTO> postDTOS) {
+        if(postDTOS == null || postDTOS.isEmpty()) return 0;
+
+        List<PostDocument> docs = new ArrayList<>();
+
+        for(PostDTO postDTO : postDTOS) {
+            PostDocument doc = modelMapper.map(postDTO, PostDocument.class);
+            docs.add(doc);
+        }
+
+        //批量保存
+        postRepository.saveAll(docs);
+
+        return docs.size();
     }
 }
