@@ -1,10 +1,17 @@
 package com.blog.utils;
 
+import com.google.common.collect.Sets;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import redis.clients.jedis.JedisCommands;
+import redis.clients.jedis.MultiKeyCommands;
+import redis.clients.jedis.ScanParams;
+import redis.clients.jedis.ScanResult;
 
 import java.util.Collection;
 import java.util.List;
@@ -76,6 +83,36 @@ public class RedisUtil {
                 redisTemplate.delete(CollectionUtils.arrayToList(key));
             }
         }
+    }
+
+    /**
+     * scan代替keys命令获取key列表，防止redis阻塞
+     *
+     * @param key 键
+     */
+    public Set<String> scan(String key) {
+        return (Set<String>)redisTemplate.execute((RedisCallback<Set<String>>) connection -> {
+            Set<String> keys = Sets.newHashSet();
+
+            JedisCommands commands = (JedisCommands) connection.getNativeConnection();
+            MultiKeyCommands multiKeyCommands = (MultiKeyCommands) commands;
+
+            ScanParams scanParams = new ScanParams();
+            scanParams.match("*" + key + "*");
+            scanParams.count(1000);
+            ScanResult<String> scan = multiKeyCommands.scan("0", scanParams);
+            while (null != scan.getStringCursor()) {
+                keys.addAll(scan.getResult());
+                if (!StringUtils.equals("0", scan.getStringCursor())) {
+                    scan = multiKeyCommands.scan(scan.getStringCursor(), scanParams);
+                    continue;
+                } else {
+                    break;
+                }
+            }
+
+            return keys;
+        });
     }
 
     //============================String=============================  

@@ -3,6 +3,8 @@ package com.blog.service;
 import com.blog.entity.Post;
 import com.blog.search.dto.PostDTO;
 
+import java.util.Map;
+
 /**
  * <p>
  *  服务类
@@ -35,4 +37,10 @@ public interface PostService extends BaseService<Post> {
      * @param postId
      */
     PostDTO findPostDTOById(long postId);
+
+    /**
+     * 显示redis中的文章阅读量
+     * @param postMap
+     */
+    void setViewCount(Map<String, Object> postMap);
 }

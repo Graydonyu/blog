@@ -18,7 +18,7 @@ import java.util.*;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author ygd
@@ -36,7 +36,7 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
 
     @Override
     public void join(Map<String, Object> map, String field) {
-        if(CollectionUtil.isEmpty(map) || map.get(field) == null){
+        if (CollectionUtil.isEmpty(map) || map.get(field) == null) {
             return;
         }
 
@@ -92,10 +92,10 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
     public void zUnionAndStoreLast7DaysForLastWeekRank() {
         String prifix = "day_rank:";
 
-        List<String> keys  = new ArrayList<>();
+        List<String> keys = new ArrayList<>();
         String key = prifix + DateUtil.format(new Date(), DatePattern.PURE_DATE_PATTERN);
 
-        for(int i = -7 ; i < 0; i++) {
+        for (int i = -7; i < 0; i++) {
             Date date = DateUtil.offsetDay(new Date(), i).toJdkDate();
             keys.add(prifix + DateUtil.format(date, DatePattern.PURE_DATE_PATTERN));
         }
@@ -105,6 +105,7 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
 
     /**
      * 给set里的文章评论加1，并且重新union7天的评论数量
+     *
      * @param postId
      */
     @Override
@@ -121,12 +122,13 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
 
     /**
      * hash结构缓存文章标题和id
+     *
      * @param post
      */
     private void hashCachePostIdAndTitle(Post post) {
 
         boolean isExist = redisUtil.hasKey("rank_post_" + post.getId());
-        if(!isExist) {
+        if (!isExist) {
             long between = DateUtil.between(new Date(), post.getCreated(), DateUnit.DAY);
             long expireTime = (7 - between) * 24 * 60 * 60;
 
@@ -140,5 +142,17 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
     @Override
     public PostDTO findPostDTOById(long postId) {
         return postMapper.findPostDTOById(postId);
+    }
+
+    @Override
+    public void setViewCount(Map<String, Object> postMap) {
+        //获取redis中的阅读量
+        Object viewCount = redisUtil.hget("rank_post_" + postMap.get("id"), "post:viewCount");
+
+        if(viewCount == null){
+            postMap.put("view_count",Integer.valueOf(postMap.get("view_count").toString()) + 1);
+        }else{
+            postMap.put("view_count",viewCount);
+        }
     }
 }

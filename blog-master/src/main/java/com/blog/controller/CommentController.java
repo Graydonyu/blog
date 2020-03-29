@@ -48,6 +48,8 @@ public class CommentController extends BaseController {
         post.setCommentCount(post.getCommentCount() + 1);
         postService.saveOrUpdate(post);
 
+        // TODO 全体事务都有问题
+
         //更新首页排版的评论数量
         postService.incrZsetValueAndUnionForLastWeekRank(comment.getPostId());
 

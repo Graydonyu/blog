@@ -47,6 +47,8 @@ public class PostController extends BaseController{
 
         Assert.notNull(post, "该文章已被删除");
 
+        postService.setViewCount(post);
+
         req.setAttribute("post", post);
         req.setAttribute("currentCategoryId", post.get("category_id"));
 
