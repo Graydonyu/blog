@@ -52,7 +52,10 @@ public class UserCollectionController extends BaseController {
 
         Post post = postService.getById(postId);
 
-        Assert.isTrue(post != null, "该帖子已被删除");
+        if(post == null){
+           return R.failed("该帖子已被删除");
+        }
+        //Assert.isTrue(post != null, "该帖子已被删除");
 
         int count = userCollectionService.count(new QueryWrapper<UserCollection>()
                 .eq("post_id", postId)

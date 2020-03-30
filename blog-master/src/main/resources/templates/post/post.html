@@ -56,9 +56,9 @@
                         <a th:href="@{'/user/' + ${post.user_id}}" class="fly-link">
                             <cite th:text="${post.author.username}"></cite>
                             <i class="iconfont icon-renzheng" title="认证信息：{{ rows.user.approve }}"></i>
-                            <i class="layui-badge fly-badge-vip">VIP3</i>
+                            <i class="layui-badge fly-badge-vip" th:text="${post.author.vipLevel}"></i>
                         </a>
-                        <span>2017-11-30</span>
+                        <span th:text="${post.created}"></span>
                     </div>
                     <div class="detail-hits" id="LAY_jieAdmin" data-id="123">
                         <span style="padding-right: 10px; color: #FF7200">悬赏：60飞吻</span>
@@ -130,7 +130,7 @@
                     </li>
 
                     <!-- 无数据时 -->
-                    <!-- <li class="fly-none">消灭零回复</li> -->
+                    <li class="fly-none" th:if="${#lists.isEmpty(pageData.records)}">消灭零回复</li>
                 </ul>
                 <div th:if="${not #lists.isEmpty(pageData.records)}" style="text-align: center">
                     <div th:include="common/page :: page"></div>

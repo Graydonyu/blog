@@ -8,11 +8,13 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.entity.Post;
 import com.blog.entity.User;
+import com.blog.entity.enums.IsEnum;
 import com.blog.search.dto.SearchResultDTO;
 import com.google.code.kaptcha.Producer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -65,14 +67,19 @@ public class IndexController extends BaseController {
         if(CollectionUtil.isNotEmpty(levelPosts)){
             userService.join(levelPosts, "user_id");
             categoryService.join(levelPosts, "category_id");
+
+            levelPosts.stream().forEach(p -> postService.setViewCount(p, IsEnum.NO));
         }
 
         IPage<Map<String, Object>> pageData = postService.pageMaps(page, null);
 
         //添加关联的用户信息
-        userService.join(pageData, "user_id");
-        categoryService.join(pageData, "category_id");
+        if(CollectionUtils.isNotEmpty(pageData.getRecords())){
+            userService.join(pageData, "user_id");
+            categoryService.join(pageData, "category_id");
 
+            pageData.getRecords().stream().forEach(p -> postService.setViewCount(p, IsEnum.NO));
+        }
         req.setAttribute("levelPosts",levelPosts);
         req.setAttribute("pageData", pageData);
 
@@ -161,6 +168,7 @@ public class IndexController extends BaseController {
         return "redirect:/";
     }
 
+    @ApiOperation("搜索")
     @RequestMapping("/search")
     public String search(@RequestParam(defaultValue = "1") int current,
                          @RequestParam(defaultValue = "10")int size,

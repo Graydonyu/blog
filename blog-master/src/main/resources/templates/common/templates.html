@@ -51,7 +51,7 @@
                                 <shiro:principal property="username"/>
                             </cite>
                             <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
-                            <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>
+                            <i class="layui-badge fly-badge-vip layui-hide-xs" th:text="${session.profile.vipLevel}"></i>
                             <img th:src="${session.profile.avatar}">
                         </a>
                         <dl class="layui-nav-child">

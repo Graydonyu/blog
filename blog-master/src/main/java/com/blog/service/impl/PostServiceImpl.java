@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.entity.Post;
+import com.blog.entity.enums.IsEnum;
 import com.blog.mapper.PostMapper;
 import com.blog.search.dto.PostDTO;
 import com.blog.service.PostService;
@@ -129,7 +130,7 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
      */
     private void hashCachePostIdAndTitle(Post post) {
 
-        boolean isExist = redisUtil.hasKey("rank_post_" + post.getId());
+        boolean isExist = redisUtil.hHasKey("rank_post_" + post.getId(),"post:id");
         if (!isExist) {
             long between = DateUtil.between(new Date(), post.getCreated(), DateUnit.DAY);
             long expireTime = (7 - between) * 24 * 60 * 60;
@@ -147,12 +148,14 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
     }
 
     @Override
-    public void setViewCount(Map<String, Object> postMap) {
+    public void setViewCount(Map<String, Object> postMap, IsEnum isEnum) {
         //获取redis中的阅读量
         Object viewCount = redisUtil.hget("rank_post_" + postMap.get("id"), "post:viewCount");
 
         if(viewCount == null){
-            postMap.put("view_count",Integer.valueOf(postMap.get("view_count").toString()) + 1);
+            if(IsEnum.YES == isEnum){
+                postMap.put("view_count",Integer.valueOf(postMap.get("view_count").toString()) + 1);
+            }
         }else{
             postMap.put("view_count",viewCount);
         }

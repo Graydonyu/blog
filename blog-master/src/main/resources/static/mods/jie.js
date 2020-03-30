@@ -37,8 +37,6 @@ layui.define('fly', function(exports){
         }
     });
 
-    console.log("222222222");
-
     //提交回答
     fly.form['/user/post/comment'] = function(data, required){
         var tpl = '<li>\
@@ -106,7 +104,7 @@ layui.define('fly', function(exports){
 
         //收藏
         ,collect: function(div){
-            var othis = $(this), type = othis.data('type');
+            var div = $('.fly-admin-box'),othis = $(this), type = othis.data('type');
             fly.json('/collection/'+ type +'/', {
                 postId: div.data('id')
             }, function(res){
@@ -132,7 +130,6 @@ layui.define('fly', function(exports){
             fly.json('/collection/find', {
                 postId: div.data('id')
             }, function(res){
-                console.log("--------------")
                 jieAdmin.append('<span class="layui-btn layui-btn-xs jie-admin '+ (res.data.collection ? 'layui-btn-danger' : '') +'" type="collect" data-type="'+ (res.data.collection ? 'remove' : 'add') +'">'+ (res.data.collection ? '取消收藏' : '收藏') +'</span>');
             });
         }

@@ -24,5 +24,7 @@ public class AccountProfile extends BaseEntity {
 
     private Integer commentCount;
 
+    private String vipLevel;
+
     private Date lasted;
 }

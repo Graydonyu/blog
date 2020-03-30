@@ -1,8 +1,12 @@
 package com.blog.controller;
 
 import com.blog.client.BlogSearchClient;
-import com.blog.feign.BlogSearchClient;
-import com.blog.service.*;
+import com.blog.service.CategoryService;
+import com.blog.service.CommentService;
+import com.blog.service.PostService;
+import com.blog.service.UserCollectionService;
+import com.blog.service.UserMessageService;
+import com.blog.service.UserService;
 import com.blog.shiro.AccountProfile;
 import com.blog.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;

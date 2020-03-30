@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.entity.Category;
 import com.blog.entity.Comment;
 import com.blog.entity.Post;
+import com.blog.entity.enums.IsEnum;
 import com.blog.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -47,7 +48,7 @@ public class PostController extends BaseController{
 
         Assert.notNull(post, "该文章已被删除");
 
-        postService.setViewCount(post);
+        postService.setViewCount(post, IsEnum.YES);
 
         req.setAttribute("post", post);
         req.setAttribute("currentCategoryId", post.get("category_id"));

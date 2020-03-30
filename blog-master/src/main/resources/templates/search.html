@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>基于 layui 的极简社区页面模版</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="fly,layui,前端社区">
+    <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
+
+    <!--全局样式-->
+    <link th:include="common/static :: style" />
+</head>
+<body>
+<!--头-->
+<div th:include="common/templates :: header"></div>
+<div th:include="common/templates :: header-nav"></div>
+
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8">
+
+            <div class="fly-panel" style="margin-bottom: 0;">
+
+                <ul class="fly-list">
+                    <li th:each="data:${pageData.records}">
+                        <a th:href="'/user/' + ${data.authorId}" class="fly-avatar">
+                            <img th:src="${data.avatar}" th:alt="${data.author}">
+                        </a>
+                        <h2>
+                            <a class="layui-badge">动态</a>
+                            <a th:href="'/post/' + ${data.id}" th:text="${data.title}"></a>
+                        </h2>
+                        <div class="fly-list-info">
+                            <a th:href="'/user/' + ${data.authorId}">
+                                <cite th:text="${data.author}"></cite>
+                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                                <i class="layui-badge fly-badge-vip" th:text="${data.authorVip}"></i>
+                            </a>
+                            <span>刚刚</span>
+
+                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻">
+                                <i class="iconfont icon-kiss"></i>
+                                <span th:text="${data.viewCount}"/>
+                            </span>
+                            <span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>
+                            <span class="fly-list-nums">
+                                <i class="iconfont icon-pinglun1" title="回答"></i>
+                                <span th:text="${data.commentCount}"/>
+                            </span>
+                        </div>
+                        <div class="fly-list-badge">
+                            <span class="layui-badge layui-bg-red" th:if="${data.recommend}" th:text="'精帖'"></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <div th:if="${not #lists.isEmpty(pageData.records)}" style="text-align: center">
+                    <div th:include="common/page :: page"></div>
+                </div>
+                <div th:if="${#lists.isEmpty(pageData.records)}" style="text-align: center">
+                    <div class="fly-panel">
+                        <div class="fly-none">
+                            <h2><i class="iconfont icon-tishilian"></i></h2>
+                            <p>没有搜索到任何东西~</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="layui-col-md4">
+
+            <!--本周热议-->
+            <div th:include="common/templates :: weekPopular"></div>
+
+        </div>
+    </div>
+</div>
+
+<!--尾-->
+<div th:include="common/templates :: footer"></div>
+</body>
+</html>

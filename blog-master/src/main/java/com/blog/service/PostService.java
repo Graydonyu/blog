@@ -3,6 +3,7 @@ package com.blog.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.entity.Post;
+import com.blog.entity.enums.IsEnum;
 import com.blog.search.dto.PostDTO;
 
 import java.util.Map;
@@ -43,8 +44,9 @@ public interface PostService extends BaseService<Post> {
     /**
      * 显示redis中的文章阅读量
      * @param postMap
+     * @param isEnum 判断是否需要在原有阅读量上+1
      */
-    void setViewCount(Map<String, Object> postMap);
+    void setViewCount(Map<String, Object> postMap, IsEnum isEnum);
 
     /**
      * 分页查询所有帖子，提供给搜索服务

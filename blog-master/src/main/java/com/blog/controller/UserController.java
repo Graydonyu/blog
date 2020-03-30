@@ -12,9 +12,11 @@ import com.blog.entity.Post;
 import com.blog.entity.User;
 import com.blog.entity.UserCollection;
 import com.blog.entity.UserMessage;
+import com.blog.entity.enums.IsEnum;
 import com.blog.shiro.AccountProfile;
 import com.blog.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,6 +52,9 @@ public class UserController extends BaseController {
         QueryWrapper<Post> wrapper = new QueryWrapper<Post>().eq("user_id", getProfileId()).orderByDesc("created");
 
         IPage<Map<String, Object>> pageData = postService.pageMaps(page, wrapper);
+        if(CollectionUtils.isNotEmpty(pageData.getRecords())){
+            pageData.getRecords().stream().forEach(p -> postService.setViewCount(p, IsEnum.NO));
+        }
         req.setAttribute("pageData", pageData);
 
         return "user/center";
