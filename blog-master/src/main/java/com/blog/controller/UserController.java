@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.blog.entity.Comment;
 import com.blog.entity.Post;
 import com.blog.entity.User;
 import com.blog.entity.UserCollection;
@@ -29,7 +30,7 @@ import java.util.Map;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author ygd
@@ -42,7 +43,7 @@ public class UserController extends BaseController {
 
     @GetMapping("/center")
     public String center(@RequestParam(defaultValue = "1") Integer current,
-                         @RequestParam(defaultValue = "10")Integer size){
+                         @RequestParam(defaultValue = "10") Integer size) {
         Page<Post> page = new Page<>();
         page.setCurrent(current);
         page.setSize(size);
@@ -52,7 +53,7 @@ public class UserController extends BaseController {
         QueryWrapper<Post> wrapper = new QueryWrapper<Post>().eq("user_id", getProfileId()).orderByDesc("created");
 
         IPage<Map<String, Object>> pageData = postService.pageMaps(page, wrapper);
-        if(CollectionUtils.isNotEmpty(pageData.getRecords())){
+        if (CollectionUtils.isNotEmpty(pageData.getRecords())) {
             pageData.getRecords().stream().forEach(p -> postService.setViewCount(p, IsEnum.NO));
         }
         req.setAttribute("pageData", pageData);
@@ -62,7 +63,7 @@ public class UserController extends BaseController {
 
     @GetMapping("/collection")
     public String collection(@RequestParam(defaultValue = "1") Integer current,
-                             @RequestParam(defaultValue = "10")Integer size) {
+                             @RequestParam(defaultValue = "10") Integer size) {
 
         Page<UserCollection> page = new Page<>();
         page.setCurrent(current);
@@ -79,11 +80,11 @@ public class UserController extends BaseController {
 
     /**
      * 头像上传
-     *
+     * <p>
      * Constant.uploadDir是要上传的路径
      * Constant.uploadUrl是我另一个tomcat的项目路径
      * Constant.uploadDir对应的就是这个Constant.uploadUrl的访问路径。
-     *
+     * <p>
      * 可以通过另外部署一个tomcat或者nginx实现
      * 当然了，上传到云存储服务器更好。
      *
@@ -93,9 +94,9 @@ public class UserController extends BaseController {
     @ResponseBody
     @PostMapping("/upload")
     public R upload(@RequestParam(value = "file") MultipartFile file,
-                    @RequestParam(name="type", defaultValue = "avatar") String type) throws Exception{
+                    @RequestParam(name = "type", defaultValue = "avatar") String type) throws Exception {
 
-        if(file.isEmpty()) {
+        if (file.isEmpty()) {
             return R.failed("上传失败");
         }
 
@@ -157,17 +158,26 @@ public class UserController extends BaseController {
         User user = userService.getById(id);
         user.setPassword(null);
 
-        //30天内容的文章
+        //30天内的文章
         Date date30Before = DateUtil.offsetDay(new Date(), -30).toJdkDate();
         List<Post> posts = postService.list(new QueryWrapper<Post>()
                 .eq("user_id", id)
                 .ge("created", date30Before)
                 .orderByDesc("created"));
 
+        //30天内的回答
+        List<Map<String, Object>> comments = commentService.listMaps(new QueryWrapper<Comment>()
+                .eq("user_id", id)
+                .ge("created", date30Before)
+                .orderByDesc("created")
+                .last("limit 5"));
+        postService.join(comments,"post_id");
+
         //TODO 动作记录
 
         req.setAttribute("user", user);
         req.setAttribute("posts", posts);
+        req.setAttribute("comments", comments);
 
         return "user/home";
     }
@@ -192,14 +202,14 @@ public class UserController extends BaseController {
         tempUser.setMobile(user.getMobile());
 
         boolean isSucc = userService.updateById(tempUser);
-        if(isSucc) {
+        if (isSucc) {
             //更新shiro的信息
             AccountProfile profile = getProfile();
             profile.setUsername(user.getUsername());
             profile.setGender(user.getGender());
         }
 
-        return isSucc ? R.ok(user): R.failed("更新失败");
+        return isSucc ? R.ok(user) : R.failed("更新失败");
     }
 
     @ResponseBody
@@ -209,7 +219,7 @@ public class UserController extends BaseController {
         User user = userService.getById(getProfileId());
 
         String nowPassMd5 = SecureUtil.md5(nowpass);
-        if(!nowPassMd5.equals(user.getPassword())) {
+        if (!nowPassMd5.equals(user.getPassword())) {
             return R.failed("密码不正确");
         }
 
@@ -221,7 +231,7 @@ public class UserController extends BaseController {
 
     @GetMapping("/message")
     public String message(@RequestParam(defaultValue = "1") Integer current,
-                          @RequestParam(defaultValue = "10")Integer size) {
+                          @RequestParam(defaultValue = "10") Integer size) {
         Page<UserMessage> page = new Page<>();
         page.setCurrent(current);
         page.setSize(size);
@@ -248,7 +258,7 @@ public class UserController extends BaseController {
 
         QueryWrapper<UserMessage> warapper = new QueryWrapper<UserMessage>()
                 .eq("to_user_id", getProfileId())
-                .eq(!all,"id", id);
+                .eq(!all, "id", id);
 
         //只能删除自己的消息
         boolean res = userMessageService.remove(warapper);
