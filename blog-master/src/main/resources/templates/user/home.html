@@ -71,10 +71,10 @@
         <ul class="home-jieda">
           <li th:each="data : ${comments}">
             <p>
-              <span th:text="${data.created}"></span>
+                <span th:text="${data.created}"></span>
               在<a th:href="@{'/post/' + ${data.post_id}}" target="_blank" th:text="${data.post.title}"></a>中回答：
             </p>
-            <div class="home-dacontent" th:text="${data.content}">
+            <div class="detail-body jieda-body photos home-dacontent" th:text="${data.content}">
             </div>
           </li>
           <!--<li>
@@ -109,5 +109,18 @@ full: true
 
 <!--尾-->
 <div th:include="common/templates :: footer"></div>
+
+<script>
+    layui.use(['fly', 'face'], function(){
+        var $ = layui.$
+            ,fly = layui.fly;
+        //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+
+        $('.detail-body').each(function(){
+            var othis = $(this), html = othis.html();
+            othis.html(fly.content(html));
+        });
+    });
+</script>
 </body>
 </html>

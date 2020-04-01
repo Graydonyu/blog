@@ -16,6 +16,7 @@ import com.blog.entity.UserMessage;
 import com.blog.entity.enums.IsEnum;
 import com.blog.shiro.AccountProfile;
 import com.blog.utils.Constant;
+import com.blog.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Controller;
@@ -152,7 +153,7 @@ public class UserController extends BaseController {
         return result;
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public String home(@PathVariable Long id) {
 
         User user = userService.getById(id);
@@ -171,7 +172,14 @@ public class UserController extends BaseController {
                 .ge("created", date30Before)
                 .orderByDesc("created")
                 .last("limit 5"));
-        postService.join(comments,"post_id");
+        if(CollectionUtils.isNotEmpty(comments)){
+            postService.join(comments,"post_id");
+
+            comments.forEach(comment -> {
+                String created = DateUtils.getDateDiff((Date) comment.get("created"));
+                comment.put("created",created);
+            });
+        }
 
         //TODO 动作记录
 
