@@ -25,4 +25,19 @@ public class Constant {
 
     public static final String EDIT_HTML_MODEL= "html";
     public static final String EDIT_MD_MODEL= "Markdown";
+
+    //签到天数
+    public static final int FIVE_DAY = 5;
+    public static final int FIFTEEN_DAY = 15;
+    public static final int THIRTY_DAY = 30;
+    public static final int ONE_HUNDRED_DAY = 100;
+    public static final int THREE_HUNDRED_AND_SIXTY_FIVE_DAY = 365;
+
+    //积分(飞吻)数
+    public static final int FIVE_POINTS = 5;
+    public static final int TEN_POINTS = 10;
+    public static final int FIFTEEN_POINTS = 15;
+    public static final int TWENTY_POINTS = 20;
+    public static final int THIRTY_POINTS = 30;
+    public static final int FIFTY_POINTS = 50;
 }

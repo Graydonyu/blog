@@ -27,4 +27,6 @@ public class AccountProfile extends BaseEntity {
     private String vipLevel;
 
     private Date lasted;
+
+    private Integer continuousSigninDays;
 }

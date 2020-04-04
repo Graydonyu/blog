@@ -97,4 +97,19 @@ public class User extends Entity {
      * 最后的登陆时间
      */
          private Date lasted;
+
+        /**
+     * 连续签到的天数
+     */
+        private Integer continuousSigninDays;
+
+        /**
+     * 连续签到的开始日期
+     */
+        private Date firstSigninDay;
+
+        /**
+     * 连续签到的最后一次日期
+     */
+        private Date lastSigninDay;
 }

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.search.dto.PostDTO;
-import com.blog.service.PostService;
+import com.blog.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +19,7 @@ import java.util.List;
 public class BlogSearchFeign {
 
     @Autowired
-    PostService postService;
+    IPostService postService;
 
     @GetMapping("/post/findPostDTOByPostId")
     public R<PostDTO> findPostDTOByPostId(long postId) {

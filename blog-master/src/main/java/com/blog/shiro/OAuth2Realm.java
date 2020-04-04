@@ -1,6 +1,6 @@
 package com.blog.shiro;
 
-import com.blog.service.UserService;
+import com.blog.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class OAuth2Realm extends AuthorizingRealm {
 
     @Autowired
-    UserService userService;
+    IUserService userService;
 
     /**
      * 授权

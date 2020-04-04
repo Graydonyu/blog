@@ -50,7 +50,7 @@
 <div class="layui-container">
   <div class="layui-row layui-col-space15">
     <div class="layui-col-md6 fly-home-jie">
-      <div class="fly-panel">
+      <div class="fly-panel" style="height: 560px; overflow-y: auto">
         <h3 class="fly-panel-title"><text th:text="${user.username}"></text> 最近的提问</h3>
         <ul class="jie-row">
           <li th:each="data : ${posts}">
@@ -66,7 +66,7 @@
     </div>
 
     <div class="layui-col-md6 fly-home-da">
-      <div class="fly-panel">
+      <div class="fly-panel" style="height: 560px; overflow-y: auto">
         <h3 class="fly-panel-title"><text th:text="${user.username}"></text> 最近的回答</h3>
         <ul class="home-jieda">
           <li th:each="data : ${comments}">

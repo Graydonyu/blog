@@ -49,6 +49,7 @@ public class ShiroConfig {
         hashMap.put("/post/execute/**", "user");
         hashMap.put("/comment/**", "user");
         hashMap.put("/collection/**", "user");
+        hashMap.put("/sign/in", "user");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(hashMap);
 
         return shiroFilterFactoryBean;

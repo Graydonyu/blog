@@ -1,12 +1,13 @@
 package com.blog.controller;
 
 import com.blog.client.BlogSearchClient;
-import com.blog.service.CategoryService;
-import com.blog.service.CommentService;
-import com.blog.service.PostService;
-import com.blog.service.UserCollectionService;
-import com.blog.service.UserMessageService;
-import com.blog.service.UserService;
+import com.blog.service.ICategoryService;
+import com.blog.service.ICommentService;
+import com.blog.service.IPostService;
+import com.blog.service.ISigninService;
+import com.blog.service.IUserCollectionService;
+import com.blog.service.IUserMessageService;
+import com.blog.service.IUserService;
 import com.blog.shiro.AccountProfile;
 import com.blog.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -31,22 +32,25 @@ public class BaseController {
     HttpServletRequest req;
 
     @Autowired
-    UserService userService;
+    IUserService userService;
 
     @Autowired
-    PostService postService;
+    IPostService postService;
 
     @Autowired
-    CategoryService categoryService;
+    ICategoryService categoryService;
 
     @Autowired
-    CommentService commentService;
+    ICommentService commentService;
 
     @Autowired
-    UserCollectionService userCollectionService;
+    IUserCollectionService userCollectionService;
 
     @Autowired
-    UserMessageService userMessageService;
+    IUserMessageService userMessageService;
+
+    @Autowired
+    ISigninService signinService;
 
     @Autowired
     RedisUtil redisUtil;

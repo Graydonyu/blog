@@ -328,10 +328,10 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
   //签到
   var tplSignin = ['{{# if(d.signed){ }}'
     ,'<button class="layui-btn layui-btn-disabled">今日已签到</button>'
-    ,'<span>获得了<cite>{{ d.experience }}</cite>飞吻</span>'
+    ,'<span>获得了<cite>{{ d.points }}</cite>飞吻</span>'
   ,'{{# } else { }}'
     ,'<button class="layui-btn layui-btn-danger" id="LAY_signin">今日签到</button>'
-    ,'<span>可获得<cite>{{ d.experience }}</cite>飞吻</span>'
+    ,'<span>可获得<cite>{{ d.points }}</cite>飞吻</span>'
   ,'{{# } }}'].join('')
   ,tplSigninDay = '已连续签到<cite>{{ d.days }}</cite>天'
 
@@ -350,21 +350,20 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
   ,elemSigninDays = $('.fly-signin-days');
   
   if(elemSigninMain[0]){
-    /*
     fly.json('/sign/status', function(res){
       if(!res.data) return;
-      signRender.token = res.data.token;
+      signRender.userId = res.data.userId;
       signRender(res.data);
     });
-    */
   }
   $('body').on('click', '#LAY_signin', function(){
     var othis = $(this);
     if(othis.hasClass(DISABLED)) return;
 
     fly.json('/sign/in', {
-      token: signRender.token || 1
+      userId: signRender.userId
     }, function(res){
+        layer.msg(res.msg);
       signRender(res.data);
     }, {
       error: function(){

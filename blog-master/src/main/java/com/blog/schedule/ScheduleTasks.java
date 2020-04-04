@@ -2,7 +2,7 @@ package com.blog.schedule;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.blog.entity.Post;
-import com.blog.service.PostService;
+import com.blog.service.IPostService;
 import com.blog.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class ScheduleTasks {
     RedisUtil redisUtil;
 
     @Autowired
-    PostService postService;
+    IPostService postService;
 
     /**
      * 阅读数量同步任务

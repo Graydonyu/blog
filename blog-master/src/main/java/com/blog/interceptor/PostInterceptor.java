@@ -2,7 +2,7 @@ package com.blog.interceptor;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.blog.entity.Post;
-import com.blog.service.PostService;
+import com.blog.service.IPostService;
 import com.blog.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -21,7 +21,7 @@ public class PostInterceptor implements HandlerInterceptor {
     RedisUtil redisUtil;
 
     @Autowired
-    PostService postService;
+    IPostService postService;
 
     /**
      * 拦截器，增加帖子阅读量并放入redis

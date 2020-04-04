@@ -1,7 +1,7 @@
 package com.blog.config;
 
-import com.blog.service.CategoryService;
-import com.blog.service.PostService;
+import com.blog.service.ICategoryService;
+import com.blog.service.IPostService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -20,10 +20,10 @@ public class ContextStartup implements ApplicationRunner, ServletContextAware {
     private ServletContext servletContext;
 
     @Autowired
-    CategoryService categoryService;
+    ICategoryService categoryService;
 
     @Autowired
-    PostService postService;
+    IPostService postService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
