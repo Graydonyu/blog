@@ -16,7 +16,7 @@ import java.util.Map;
  * @author ygd
  * @since 2019-03-22
  */
-public interface PostService extends BaseService<Post> {
+public interface IPostService extends IBaseService<Post> {
 
     /**
      * 初始化首页的周评论排行榜

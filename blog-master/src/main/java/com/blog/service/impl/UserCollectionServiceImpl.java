@@ -2,7 +2,7 @@ package com.blog.service.impl;
 
 import com.blog.entity.UserCollection;
 import com.blog.mapper.UserCollectionMapper;
-import com.blog.service.UserCollectionService;
+import com.blog.service.IUserCollectionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class UserCollectionServiceImpl extends BaseServiceImpl<UserCollectionMapper, UserCollection> implements UserCollectionService {
+public class UserCollectionServiceImpl extends BaseServiceImpl<UserCollectionMapper, UserCollection> implements IUserCollectionService {
 
 }

@@ -10,6 +10,6 @@ import com.blog.entity.Category;
  * @author ygd
  * @since 2019-03-22
  */
-public interface CategoryService extends BaseService<Category> {
+public interface ICategoryService extends IBaseService<Category> {
 
 }

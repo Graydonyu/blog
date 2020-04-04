@@ -11,7 +11,7 @@ import com.blog.entity.Post;
 import com.blog.entity.enums.IsEnum;
 import com.blog.mapper.PostMapper;
 import com.blog.search.dto.PostDTO;
-import com.blog.service.PostService;
+import com.blog.service.IPostService;
 import com.blog.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ import java.util.*;
  */
 @Service
 @Transactional
-public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implements PostService {
+public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implements IPostService {
 
     @Autowired
     RedisUtil redisUtil;

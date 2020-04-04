@@ -3,7 +3,7 @@ package com.blog.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import com.blog.entity.Comment;
 import com.blog.mapper.CommentMapper;
-import com.blog.service.CommentService;
+import com.blog.service.ICommentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +20,7 @@ import java.util.Map;
  */
 @Service
 @Transactional
-public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> implements CommentService {
+public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> implements ICommentService {
 
     @Override
     public void join(Map<String, Object> map, String field) {

@@ -3,7 +3,7 @@ package com.blog.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import com.blog.entity.Category;
 import com.blog.mapper.CategoryMapper;
-import com.blog.service.CategoryService;
+import com.blog.service.ICategoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +20,7 @@ import java.util.Map;
  */
 @Service
 @Transactional
-public class CategoryServiceImpl extends BaseServiceImpl<CategoryMapper, Category> implements CategoryService {
+public class CategoryServiceImpl extends BaseServiceImpl<CategoryMapper, Category> implements ICategoryService {
 
     @Override
     public void join(Map<String,Object> map,String field){

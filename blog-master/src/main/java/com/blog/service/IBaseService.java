@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 import java.util.Map;
 
-public interface BaseService<T> extends IService<T> {
+public interface IBaseService<T> extends IService<T> {
 
     void join(Map<String, Object> stringObjectMap, String field);
 

@@ -10,6 +10,6 @@ import com.blog.entity.Comment;
  * @author ygd
  * @since 2019-03-22
  */
-public interface CommentService extends BaseService<Comment> {
+public interface ICommentService extends IBaseService<Comment> {
 
 }

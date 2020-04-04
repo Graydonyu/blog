@@ -10,6 +10,6 @@ import com.blog.entity.UserMessage;
  * @author ygd
  * @since 2019-04-30
  */
-public interface UserMessageService extends BaseService<UserMessage> {
+public interface IUserMessageService extends IBaseService<UserMessage> {
 
 }

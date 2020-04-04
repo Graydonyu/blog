@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.blog.entity.User;
 import com.blog.mapper.UserMapper;
-import com.blog.service.UserService;
+import com.blog.service.IUserService;
 import com.blog.shiro.AccountProfile;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -31,7 +31,7 @@ import java.util.Map;
 @Slf4j
 @Service
 @Transactional
-public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements IUserService {
 
     @Override
     public void join(Map<String, Object> map, String linkfield) {

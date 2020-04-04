@@ -12,7 +12,7 @@ import com.blog.shiro.AccountProfile;
  * @author ygd
  * @since 2019-03-22
  */
-public interface UserService extends BaseService<User> {
+public interface IUserService extends IBaseService<User> {
 
     /**
      *@Author ：yuguidong
