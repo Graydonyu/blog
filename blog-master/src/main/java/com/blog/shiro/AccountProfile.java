@@ -29,4 +29,8 @@ public class AccountProfile extends BaseEntity {
     private Date lasted;
 
     private Integer continuousSigninDays;
+
+    private Date firstSigninDay;
+
+    private Date lastSigninDay;
 }

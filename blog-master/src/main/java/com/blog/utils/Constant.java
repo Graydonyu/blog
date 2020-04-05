@@ -27,6 +27,7 @@ public class Constant {
     public static final String EDIT_MD_MODEL= "Markdown";
 
     //签到天数
+    public static final int ONE_DAY = 1;
     public static final int FIVE_DAY = 5;
     public static final int FIFTEEN_DAY = 15;
     public static final int THIRTY_DAY = 30;

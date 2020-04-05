@@ -4,14 +4,17 @@ package com.blog.controller;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.enums.ApiErrorCode;
 import com.blog.entity.Signin;
+import com.blog.entity.vo.SignTopVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,6 +47,13 @@ public class SigninController extends BaseController{
         }
 
         return R.ok(resultMap);
+    }
+
+    @ResponseBody
+    @GetMapping("/top")
+    public R top(){
+        List<List<SignTopVO>> list = signinService.top();
+        return R.ok(list);
     }
 }
 

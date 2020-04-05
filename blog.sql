@@ -11,7 +11,7 @@
  Target Server Version : 50729
  File Encoding         : 65001
 
- Date: 25/03/2020 10:44:14
+ Date: 05/04/2020 22:34:54
 */
 
 SET NAMES utf8mb4;
@@ -35,7 +35,15 @@ CREATE TABLE `category` (
   `created` datetime DEFAULT NULL COMMENT '创建日期',
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of category
+-- ----------------------------
+BEGIN;
+INSERT INTO `category` VALUES (1, 'JAVA', 'java大本营', NULL, NULL, 0, NULL, 0, NULL, NULL, '2020-03-25 17:13:48', '2020-03-25 17:13:53');
+INSERT INTO `category` VALUES (2, 'GO', '新生代大佬', NULL, NULL, 0, NULL, 1, NULL, NULL, '2020-03-25 17:13:57', '2020-03-25 17:14:02');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for comment
@@ -54,7 +62,27 @@ CREATE TABLE `comment` (
   `created` datetime NOT NULL COMMENT '评论的时间',
   `modified` datetime DEFAULT NULL COMMENT '评论的更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of comment
+-- ----------------------------
+BEGIN;
+INSERT INTO `comment` VALUES (1, '呵呵呵', NULL, 1, 1, 0, 0, 0, 0, '2020-03-25 17:20:27', '2020-03-25 17:20:27');
+INSERT INTO `comment` VALUES (2, '1', NULL, 1, 1, 0, 0, 0, 0, '2020-03-28 19:37:41', '2020-03-28 19:37:41');
+INSERT INTO `comment` VALUES (3, '2', NULL, 1, 1, 0, 0, 0, 0, '2020-03-28 19:37:51', '2020-03-28 19:37:51');
+INSERT INTO `comment` VALUES (4, '3', NULL, 1, 1, 0, 0, 0, 0, '2020-03-28 20:26:08', '2020-03-28 20:26:08');
+INSERT INTO `comment` VALUES (5, '3', NULL, 1, 1, 0, 0, 0, 0, '2020-03-28 20:26:19', '2020-03-28 20:26:19');
+INSERT INTO `comment` VALUES (6, '3', NULL, 1, 1, 0, 0, 0, 0, '2020-03-28 20:26:46', '2020-03-28 20:26:46');
+INSERT INTO `comment` VALUES (7, '4', NULL, 1, 1, 0, 0, 0, 0, '2020-03-28 21:02:05', '2020-03-28 21:02:05');
+INSERT INTO `comment` VALUES (8, '4', NULL, 1, 1, 0, 0, 0, 0, '2020-03-28 21:02:08', '2020-03-28 21:02:08');
+INSERT INTO `comment` VALUES (9, '4', NULL, 1, 1, 0, 0, 0, 0, '2020-03-28 21:02:08', '2020-03-28 21:02:08');
+INSERT INTO `comment` VALUES (10, '4', NULL, 1, 1, 0, 0, 0, 0, '2020-03-28 21:02:08', '2020-03-28 21:02:08');
+INSERT INTO `comment` VALUES (11, '4', NULL, 1, 1, 0, 0, 0, 0, '2020-03-28 21:02:08', '2020-03-28 21:02:08');
+INSERT INTO `comment` VALUES (12, '自顶', NULL, 1, 1, 0, 0, 0, 0, '2020-03-30 21:37:25', '2020-03-30 21:37:25');
+INSERT INTO `comment` VALUES (13, '嘻嘻face[哈哈] ', NULL, 1, 1, 0, 0, 0, 0, '2020-03-30 21:51:19', '2020-03-30 21:51:19');
+INSERT INTO `comment` VALUES (15, '总之，\n[pre]\nsystem.out.println（）\n[/pre]\n是这样的', NULL, 1, 1, 0, 0, 0, 0, '2020-03-31 18:05:26', '2020-03-31 18:05:26');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for post
@@ -77,7 +105,49 @@ CREATE TABLE `post` (
   `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   `modified` datetime DEFAULT NULL COMMENT '最后更新日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of post
+-- ----------------------------
+BEGIN;
+INSERT INTO `post` VALUES (1, '这是标题，标题', '内容，这是内容', '0', 1, 1, 0, 0, 140, 14, 0, 1, 0, '2018-10-15 13:27:35', '2018-10-13 16:33:07');
+INSERT INTO `post` VALUES (2, '这是标222222222222222222', '内容，这是内容', '0', 2, 1, 0, 0, 67, 99, 1, 1, 0, '2018-10-15 13:27:26', '2018-10-13 16:33:07');
+INSERT INTO `post` VALUES (3, '这是标222222222222222222', '内容，这是内容', '0', 2, 1, 0, 0, 67, 99, 1, 1, 0, '2018-10-15 13:27:26', '2018-10-13 16:33:07');
+INSERT INTO `post` VALUES (4, '这是标222222222222222222', '内容，这是内容', '0', 2, 1, 0, 0, 67, 99, 1, 1, 0, '2018-10-15 13:27:26', '2018-10-13 16:33:07');
+INSERT INTO `post` VALUES (5, '这是标222222222222222222', '内容，这是内容', '0', 2, 1, 0, 0, 67, 99, 1, 1, 0, '2018-10-15 13:27:26', '2018-10-13 16:33:07');
+INSERT INTO `post` VALUES (6, '这是标222222222222222222', '内容，这是内容', '0', 2, 1, 0, 0, 67, 99, 1, 1, 0, '2018-10-15 13:27:26', '2018-10-13 16:33:07');
+INSERT INTO `post` VALUES (7, '这是标222222222222222222', '内容，这是内容', '0', 2, 1, 0, 0, 67, 99, 1, 1, 0, '2018-10-15 13:27:26', '2018-10-13 16:33:07');
+INSERT INTO `post` VALUES (8, '这是标222222222222222222', '内容，这是内容', '0', 2, 1, 0, 0, 67, 99, 1, 1, 0, '2018-10-15 13:27:26', '2018-10-13 16:33:07');
+INSERT INTO `post` VALUES (9, '这是标222222222222222222', '内容，这是内容', '0', 2, 1, 0, 0, 67, 99, 1, 1, 0, '2018-10-15 13:27:26', '2018-10-13 16:33:07');
+INSERT INTO `post` VALUES (10, '这是标222222222222222222', '内容，这是内容', '0', 2, 1, 0, 0, 67, 99, 1, 1, 0, '2018-10-15 13:27:26', '2018-10-13 16:33:07');
+INSERT INTO `post` VALUES (11, '这是标222222222222222222', '内容，这是内容', '0', 2, 1, 0, 0, 67, 99, 1, 1, 0, '2018-10-15 13:27:26', '2018-10-13 16:33:07');
+INSERT INTO `post` VALUES (12, '这是标222222222222222222', '内容，这是内容', '0', 2, 1, 0, 0, 67, 99, 1, 1, 0, '2018-10-15 13:27:26', '2018-10-13 16:33:07');
+INSERT INTO `post` VALUES (13, '发现一个好用的小工具', '骗你的哈哈哈哈', 'html', 1, 1, 0, 0, 0, 0, 0, 0, 0, '2020-03-25 17:24:08', '2020-03-25 17:24:08');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for signin
+-- ----------------------------
+DROP TABLE IF EXISTS `signin`;
+CREATE TABLE `signin` (
+  `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `user_id` bigint(32) NOT NULL COMMENT '签到的用户ID',
+  `accumulate_points` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '签到获取的积分数',
+  `signin_date` date NOT NULL COMMENT '签到日期',
+  `signin_time` time NOT NULL COMMENT '签到时间',
+  `created` datetime NOT NULL COMMENT '创建时间',
+  `modified` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of signin
+-- ----------------------------
+BEGIN;
+INSERT INTO `signin` VALUES (1, 1, 5, '2020-04-04', '23:33:28', '2020-04-04 23:33:28', '2020-04-04 23:33:28');
+INSERT INTO `signin` VALUES (2, 1, 5, '2020-04-05', '19:41:14', '2020-04-05 19:41:14', '2020-04-05 19:41:14');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for user
@@ -89,17 +159,20 @@ CREATE TABLE `user` (
   `password` varchar(128) NOT NULL COMMENT '密码',
   `email` varchar(64) DEFAULT NULL COMMENT '邮件',
   `mobile` varchar(32) DEFAULT NULL COMMENT '手机电话',
-  `point` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '积分',
+  `point` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '积分（飞吻）',
   `sign` varchar(255) DEFAULT NULL COMMENT '个性签名',
   `gender` varchar(16) DEFAULT NULL COMMENT '性别',
   `wechat` varchar(32) DEFAULT NULL COMMENT '微信号',
   `vip_level` varchar(32) DEFAULT NULL COMMENT 'vip等级',
   `birthday` datetime DEFAULT NULL COMMENT '生日',
   `avatar` varchar(256) NOT NULL COMMENT '头像',
-  `post_count` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '内容数量',
+  `post_count` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '帖子数量',
   `comment_count` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '评论数量',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   `lasted` datetime DEFAULT NULL COMMENT '最后的登陆时间',
+  `continuous_signin_days` int(11) NOT NULL DEFAULT '0' COMMENT '连续签到天数',
+  `first_signin_day` datetime DEFAULT NULL COMMENT '连续签到开始日期',
+  `last_signin_day` datetime DEFAULT NULL COMMENT '连续签到最后日期',
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   `modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
   PRIMARY KEY (`id`),
@@ -110,7 +183,7 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES (1, 'xiaoming', '1111', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg', 0, 0, 0, NULL, '2018-10-14 18:41:34', NULL);
+INSERT INTO `user` VALUES (1, 'xiaoming', 'b59c67bf196a4758191e42f76670ceba', 'xiaoming', NULL, 10, NULL, NULL, NULL, 'vip3', NULL, 'https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg', 0, 0, 0, '2020-04-05 22:32:49', 2, '2020-04-04 23:33:28', '2020-04-05 19:41:14', '2018-10-14 18:41:34', '2020-04-05 14:27:21');
 COMMIT;
 
 -- ----------------------------
@@ -125,7 +198,14 @@ CREATE TABLE `user_collection` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户收藏表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户收藏表';
+
+-- ----------------------------
+-- Records of user_collection
+-- ----------------------------
+BEGIN;
+INSERT INTO `user_collection` VALUES (1, 1, 13, 1, '2020-03-30 21:13:26', '2020-03-30 21:13:26');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for user_message
