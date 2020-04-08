@@ -121,9 +121,9 @@
                           </span>
                             <div class="jieda-admin">
                                 <shiro:user>
-                                    <!--<span type="edit">编辑</span>-->
+                                    <span type="edit" th:if="${data.user_id == session.profile.id}">编辑</span>
                                     <span type="del" th:if="${data.user_id == session.profile.id}">删除</span>
-                                    <!-- <span class="jieda-accept" type="accept">采纳</span> -->
+                                    <span class="jieda-accept" type="accept" th:if="${post.user_id == session.profile.id}">采纳</span>
                                 </shiro:user>
                             </div>
                         </div>
