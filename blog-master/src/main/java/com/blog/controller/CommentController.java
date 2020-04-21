@@ -5,7 +5,9 @@ import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.blog.entity.Comment;
 import com.blog.entity.Post;
+import com.blog.entity.req.CommentPraiseReq;
 import com.blog.utils.Constant;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -74,6 +76,40 @@ public class CommentController extends BaseController {
 
         commentService.removeById(id);
 
+        return R.ok(null);
+    }
+
+    @ResponseBody
+    @PostMapping("/getById")
+    public R getById(Comment comment) {
+        comment = commentService.getById(comment.getId());
+        return R.ok(comment);
+    }
+
+    @ResponseBody
+    @PostMapping("/update")
+    public R commentUpdate(Comment comment) {
+        if(StringUtils.isBlank(comment.getContent())){
+            return R.failed("评论内容不能为空!");
+        }
+
+        comment.setModified(new Date());
+        commentService.updateById(comment);
+        return R.ok(null);
+    }
+
+    @ResponseBody
+    @PostMapping("/praise")
+    public R praise(CommentPraiseReq commentPraiseReq) {
+        Comment comment = commentService.getById(commentPraiseReq.getId());
+
+        if(commentPraiseReq.isOk()){
+            comment.setVoteUp(comment.getVoteUp() - 1);
+        }else{
+            comment.setVoteUp(comment.getVoteUp() + 1);
+        }
+
+        commentService.updateById(comment);
         return R.ok(null);
     }
 }

@@ -74,7 +74,7 @@ layui.define('fly', function(exports){
     gather.jieAdmin = {
         //删求解
         del: function(div){
-            layer.confirm('确认删除该求解么？', function(index){
+            layer.confirm('确认删除该文章么？', function(index){
                 layer.close(index);
                 fly.json('/post/execute/delete', {
                     id: div.data('id')
@@ -139,7 +139,7 @@ layui.define('fly', function(exports){
     gather.jiedaActive = {
         zan: function(li){ //赞
             var othis = $(this), ok = othis.hasClass('zanok');
-            fly.json('/api/jieda-zan/', {
+            fly.json('/comment/praise', {
                 ok: ok
                 ,id: li.data('id')
             }, function(res){
@@ -177,10 +177,10 @@ layui.define('fly', function(exports){
             });
         }
         ,edit: function(li){ //编辑
-            fly.json('/jie/getDa/', {
+            fly.json('/comment/getById/', {
                 id: li.data('id')
             }, function(res){
-                var data = res.rows;
+                var data = res.data;
                 layer.prompt({
                     formType: 2
                     ,value: data.content
@@ -193,7 +193,7 @@ layui.define('fly', function(exports){
                         });
                     }
                 }, function(value, index){
-                    fly.json('/jie/updateDa/', {
+                    fly.json('/comment/update/', {
                         id: li.data('id')
                         ,content: value
                     }, function(res){
