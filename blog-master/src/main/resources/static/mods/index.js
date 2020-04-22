@@ -597,7 +597,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
   
   //加载IM
   if(!device.android && !device.ios){
-    //layui.use('im');
+    layui.use('im');
   }
 
   //加载编辑器
@@ -631,8 +631,8 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
     ,bgcolor: '#009688'
     ,click: function(type){
       if(type === 'bar1'){
-        layer.msg('打开 index.js，开启发表新帖的路径');
-        //location.href = 'jie/add.html';
+        //layer.msg('打开 index.js，开启发表新帖的路径');
+        location.href = '/post/execute/add';
       }
     }
   });
