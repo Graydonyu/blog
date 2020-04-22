@@ -11,9 +11,12 @@ import com.blog.entity.Category;
 import com.blog.entity.Comment;
 import com.blog.entity.Post;
 import com.blog.entity.enums.IsEnum;
+import com.blog.entity.req.SetLevelOrRecommendReq;
+import com.blog.service.IPostService;
 import com.blog.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,32 +44,7 @@ public class PostController extends BaseController{
                                 @RequestParam(defaultValue = "1") Integer current,
                                 @RequestParam(defaultValue = "10")Integer size){
 
-        Map<String, Object> post = postService.getMap(new QueryWrapper<Post>().eq("id", id));
-
-        userService.join(post, "user_id");
-        categoryService.join(post, "category_id");
-
-        Assert.notNull(post, "该文章已被删除");
-
-        postService.setViewCount(post, IsEnum.YES);
-
-        req.setAttribute("post", post);
-        req.setAttribute("currentCategoryId", post.get("category_id"));
-
-
-        Page<Comment> page = new Page<>();
-        page.setCurrent(current);
-        page.setSize(size);
-
-        IPage<Map<String, Object>> pageData = commentService.pageMaps(page, new QueryWrapper<Comment>()
-                .eq("post_id", id)
-                .orderByDesc("created"));
-
-        userService.join(pageData, "user_id");
-        commentService.join(pageData, "parent_id");
-
-        req.setAttribute("pageData", pageData);
-
+        postService.selectPostDetail(req,id,current,size,getProfile());
         return "post/post";
     }
 
@@ -183,6 +161,13 @@ public class PostController extends BaseController{
         }
 
         return R.ok(hotPosts);
+    }
+
+    @ResponseBody
+    @PostMapping("/execute/setLevelOrRecommend")
+    public R setLevelOrRecommend(SetLevelOrRecommendReq setLevelOrRecommendReq){
+        postService.setLevelOrRecommend(setLevelOrRecommendReq);
+        return R.ok(null);
     }
 }
 

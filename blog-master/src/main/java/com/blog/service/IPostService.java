@@ -4,8 +4,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.entity.Post;
 import com.blog.entity.enums.IsEnum;
+import com.blog.entity.req.SetLevelOrRecommendReq;
 import com.blog.search.dto.PostDTO;
+import com.blog.shiro.AccountProfile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -53,4 +56,18 @@ public interface IPostService extends IBaseService<Post> {
      * @param page
      */
     IPage<PostDTO> findPostDTOByPage(Page<PostDTO> page, String keyword);
+
+    /**
+     * @Description 获取文章详情
+     * @Date 2020-04-22 15:29
+     * @Author Graydon
+     **/
+    void selectPostDetail(HttpServletRequest req, Long id, Integer current, Integer size, AccountProfile profile);
+
+    /**
+     * @Description 设置置顶加精
+     * @Date 2020-04-22 17:19
+     * @Author Graydon
+     **/
+    void setLevelOrRecommend(SetLevelOrRecommendReq setLevelOrRecommendReq);
 }

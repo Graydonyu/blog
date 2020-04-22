@@ -91,7 +91,7 @@ layui.define('fly', function(exports){
         //设置置顶、状态
         ,set: function(div){
             var othis = $(this);
-            fly.json('/api/jie-set/', {
+            fly.json('/post/execute/setLevelOrRecommend', {
                 id: div.data('id')
                 ,rank: othis.attr('rank')
                 ,field: othis.attr('field')

@@ -4,19 +4,30 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.blog.entity.Comment;
 import com.blog.entity.Post;
+import com.blog.entity.PraiseLog;
 import com.blog.entity.enums.IsEnum;
+import com.blog.entity.req.SetLevelOrRecommendReq;
 import com.blog.mapper.PostMapper;
+import com.blog.mapper.PraiseLogMapper;
 import com.blog.search.dto.PostDTO;
+import com.blog.service.ICategoryService;
+import com.blog.service.ICommentService;
 import com.blog.service.IPostService;
+import com.blog.service.IUserService;
+import com.blog.shiro.AccountProfile;
 import com.blog.utils.RedisUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -32,10 +43,19 @@ import java.util.*;
 public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implements IPostService {
 
     @Autowired
-    RedisUtil redisUtil;
+    private RedisUtil redisUtil;
 
     @Autowired
-    PostMapper postMapper;
+    private PostMapper postMapper;
+
+    @Autowired
+    private IUserService userService;
+
+    @Autowired
+    private ICommentService commentService;
+
+    @Autowired
+    private ICategoryService categoryService;
 
     @Override
     public void join(Map<String, Object> map, String field) {
@@ -164,5 +184,86 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
     @Override
     public IPage<PostDTO> findPostDTOByPage(Page<PostDTO> page, String keyword) {
         return postMapper.findPostDTOByPage(page, keyword);
+    }
+
+    /**
+     * @param req
+     * @param id
+     * @param current
+     * @param size
+     * @Description 获取文章详情
+     * @Date 2020-04-22 15:29
+     * @Author Graydon
+     */
+    @Override
+    public void selectPostDetail(HttpServletRequest req, Long id, Integer current, Integer size, AccountProfile profile) {
+        Map<String, Object> post = getMap(new QueryWrapper<Post>().eq("id", id));
+
+        userService.join(post, "user_id");
+        categoryService.join(post, "category_id");
+
+        Assert.notNull(post, "该文章已被删除");
+
+        setViewCount(post, IsEnum.YES);
+
+        req.setAttribute("post", post);
+        req.setAttribute("currentCategoryId", post.get("category_id"));
+
+
+        Page<Comment> page = new Page<>();
+        page.setCurrent(current);
+        page.setSize(size);
+
+        IPage<Map<String, Object>> pageData = commentService.pageMaps(page, new QueryWrapper<Comment>()
+                .eq("post_id", id)
+                .orderByDesc("created"));
+
+        userService.join(pageData, "user_id");
+        commentService.join(pageData, "parent_id");
+
+        //点赞情况
+        if(CollectionUtils.isNotEmpty(pageData.getRecords())){
+            List<Long> commentIds;
+            if(profile != null){
+                commentIds = commentService.selectPraiseCommentIdsOfUser(profile.getId(), id);
+            }else{
+                commentIds = Collections.emptyList();
+            }
+            pageData.getRecords().forEach(c -> {
+                if(profile != null && commentIds.contains(c.get("id"))){
+                    c.put("isPraise",true);
+                }else{
+                    c.put("isPraise",false);
+                }
+            });
+        }
+
+        req.setAttribute("pageData", pageData);
+    }
+
+    /**
+     * @param setLevelOrRecommendReq
+     * @Description 设置置顶加精
+     * @Date 2020-04-22 17:19
+     * @Author Graydon
+     */
+    @Override
+    public void setLevelOrRecommend(SetLevelOrRecommendReq setLevelOrRecommendReq) {
+        Long id = setLevelOrRecommendReq.getId();
+        String field = setLevelOrRecommendReq.getField();
+        Integer rank = setLevelOrRecommendReq.getRank();
+        Post post = getById(id);
+
+        if("level".equals(field)){
+            post.setLevel(rank);
+        }else if("recommend".equals(field)){
+            if(rank == 1){
+                post.setRecommend(true);
+            }else{
+                post.setRecommend(false);
+            }
+        }
+
+        updateById(post);
     }
 }

@@ -35,11 +35,11 @@
 
                         <!--管理员权限-->
                         <shiro:hasRole name="admin">
-                            <span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="1">置顶</span>
-                            <!-- <span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="0" style="background-color:#ccc;">取消置顶</span> -->
+                            <span class="layui-btn layui-btn-xs jie-admin" type="set" field="level" rank="1" th:if="${post.level == 0}">置顶</span>
+                            <span class="layui-btn layui-btn-xs jie-admin" type="set" field="level" rank="0" th:if="${post.level gt 0}" style="background-color:#ccc;">取消置顶</span>
 
-                            <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="1">加精</span>
-                            <!-- <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="0" style="background-color:#ccc;">取消加精</span> -->
+                            <span class="layui-btn layui-btn-xs jie-admin" type="set" field="recommend" rank="1" th:if="${!post.recommend}">加精</span>
+                            <span class="layui-btn layui-btn-xs jie-admin" type="set" field="recommend" rank="0" style="background-color:#ccc;" th:if="${post.recommend}">取消加精</span>
                         </shiro:hasRole>
                     </div>
 
@@ -111,7 +111,7 @@
                         <div class="detail-body jieda-body photos" th:text="${data.content}">
                         </div>
                         <div class="jieda-reply">
-                          <span class="jieda-zan" type="zan">
+                          <span class="jieda-zan" th:classappend="${data.isPraise}?'zanok':''" type="zan">
                             <i class="iconfont icon-zan"></i>
                             <em th:text="${data.vote_up}"></em>
                           </span>

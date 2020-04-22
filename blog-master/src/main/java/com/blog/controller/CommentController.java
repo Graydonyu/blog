@@ -2,12 +2,17 @@ package com.blog.controller;
 
 
 import cn.hutool.core.lang.Assert;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.blog.entity.Comment;
 import com.blog.entity.Post;
+import com.blog.entity.PraiseLog;
 import com.blog.entity.req.CommentPraiseReq;
+import com.blog.mapper.PraiseLogMapper;
+import com.blog.service.ICommentService;
 import com.blog.utils.Constant;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -101,15 +106,7 @@ public class CommentController extends BaseController {
     @ResponseBody
     @PostMapping("/praise")
     public R praise(CommentPraiseReq commentPraiseReq) {
-        Comment comment = commentService.getById(commentPraiseReq.getId());
-
-        if(commentPraiseReq.isOk()){
-            comment.setVoteUp(comment.getVoteUp() - 1);
-        }else{
-            comment.setVoteUp(comment.getVoteUp() + 1);
-        }
-
-        commentService.updateById(comment);
+        commentService.praise(commentPraiseReq,getProfileId());
         return R.ok(null);
     }
 }
