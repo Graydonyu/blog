@@ -17,7 +17,7 @@
             p.comment_count AS commentCount,
             p.view_count AS viewCount,
             p.created,
-            p. STATUS
+            p.status
         FROM
             post p
         LEFT JOIN `user` u ON p.user_id = u.id
@@ -41,7 +41,7 @@
             p.comment_count AS commentCount,
             p.view_count AS viewCount,
             p.created,
-            p. STATUS
+            p.status
         FROM
             post p
         LEFT JOIN `user` u ON p.user_id = u.id

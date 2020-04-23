@@ -82,13 +82,13 @@
 
                 <ul class="jieda" id="jieda">
                     <li th:data-id="${data.id}" class="jieda-daan" th:each="data:${pageData.records}">
-                        <a name="item-1111111111"></a>
+                        <!--<a name="item-1111111111"></a>-->
                         <div class="detail-about detail-about-reply">
-                            <a class="fly-avatar" href="">
+                            <a class="fly-avatar" th:href="@{'/user/' + ${data.author.id}}" >
                                 <img th:src="${data.author.avatar}" alt=" ">
                             </a>
                             <div class="fly-detail-user">
-                                <a href="" class="fly-link">
+                                <a th:href="@{'/user/' + ${data.author.id}}" class="fly-link">
                                     <cite th:text="${data.author.username}"></cite>
                                     <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
                                     <i class="layui-badge fly-badge-vip" th:text="${data.author.vipLevel}"></i>
@@ -106,7 +106,7 @@
                                 <span th:text="${data.created}"></span>
                             </div>
 
-                            <!--<i class="iconfont icon-caina" title="最佳答案"></i>-->
+                            <i class="iconfont icon-caina" title="最佳答案" th:if="${post.comment_id == data.id}"></i>
                         </div>
                         <div class="detail-body jieda-body photos" th:text="${data.content}">
                         </div>
@@ -123,7 +123,7 @@
                                 <shiro:user>
                                     <span type="edit" th:if="${data.user_id == session.profile.id}">编辑</span>
                                     <span type="del" th:if="${data.user_id == session.profile.id}">删除</span>
-                                    <span class="jieda-accept" type="accept" th:if="${post.user_id == session.profile.id}">采纳</span>
+                                    <span class="jieda-accept" type="accept" th:if="${post.user_id == session.profile.id && post.comment_id == null}">采纳</span>
                                 </shiro:user>
                             </div>
                         </div>

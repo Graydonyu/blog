@@ -48,3 +48,6 @@ logging:
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml
+  configuration:
+    #getMap显示值为null的列
+    call-setters-on-nulls: true

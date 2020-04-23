@@ -2,6 +2,7 @@ package com.blog.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.blog.entity.Comment;
 import com.blog.entity.Post;
 import com.blog.entity.enums.IsEnum;
 import com.blog.entity.req.SetLevelOrRecommendReq;
@@ -70,4 +71,11 @@ public interface IPostService extends IBaseService<Post> {
      * @Author Graydon
      **/
     void setLevelOrRecommend(SetLevelOrRecommendReq setLevelOrRecommendReq);
+
+    /**
+     * @Description 采纳
+     * @Date 2020-04-23 16:46
+     * @Author Graydon
+     **/
+    void accept(Comment comment);
 }

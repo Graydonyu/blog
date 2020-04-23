@@ -21,6 +21,7 @@ import com.blog.service.ICommentService;
 import com.blog.service.IPostService;
 import com.blog.service.IUserService;
 import com.blog.shiro.AccountProfile;
+import com.blog.utils.Constant;
 import com.blog.utils.RedisUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -216,7 +217,7 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
 
         IPage<Map<String, Object>> pageData = commentService.pageMaps(page, new QueryWrapper<Comment>()
                 .eq("post_id", id)
-                .orderByDesc("created"));
+                .orderByDesc("status","created"));
 
         userService.join(pageData, "user_id");
         commentService.join(pageData, "parent_id");
@@ -265,5 +266,32 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
         }
 
         updateById(post);
+    }
+
+    /**
+     * @param comment
+     * @Description 采纳
+     * @Date 2020-04-23 16:46
+     * @Author Graydon
+     */
+    @Override
+    @Transactional
+    public void accept(Comment comment) {
+        Long commentId = comment.getId();
+        comment = commentService.getById(commentId);
+
+        Post post = getById(comment.getPostId());
+
+        if (post.getStatus() == Constant.END_STATUS || post.getCommentId() != null) return;
+
+        comment.setStatus(Constant.END_STATUS);
+
+        post.setCommentId(commentId);
+        post.setStatus(Constant.END_STATUS);
+
+        updateById(post);
+        commentService.updateById(comment);
+
+        //TODO：下发积分操作
     }
 }

@@ -21,7 +21,7 @@ public class Constant {
     }
 
     public static final int NORMAL_STATUS = 0;
-    public static final int DELETE_STATUS = 1;
+    public static final int END_STATUS = 1;
 
     public static final String EDIT_HTML_MODEL= "html";
     public static final String EDIT_MD_MODEL= "Markdown";

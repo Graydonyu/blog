@@ -163,7 +163,7 @@ layui.define('fly', function(exports){
             var othis = $(this);
             layer.confirm('是否采纳该回答为最佳答案？', function(index){
                 layer.close(index);
-                fly.json('/api/jieda-accept/', {
+                fly.json('/post/execute/accept/', {
                     id: li.data('id')
                 }, function(res){
                     if(res.code === 0){

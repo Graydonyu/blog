@@ -99,7 +99,7 @@ public class PostController extends BaseController{
 
         postService.saveOrUpdate(post);
 
-        //TODO 给所有订阅的人发送消息
+        //TODO 给所有订阅的人发送消息，设置积分
 
         return R.ok(post.getId());
     }
@@ -163,10 +163,27 @@ public class PostController extends BaseController{
         return R.ok(hotPosts);
     }
 
+    /**
+     * @Description 设置置顶和加精
+     * @Date 2020-04-23 16:46
+     * @Author Graydon
+     **/
     @ResponseBody
     @PostMapping("/execute/setLevelOrRecommend")
     public R setLevelOrRecommend(SetLevelOrRecommendReq setLevelOrRecommendReq){
         postService.setLevelOrRecommend(setLevelOrRecommendReq);
+        return R.ok(null);
+    }
+
+    /**
+     * @Description 采纳
+     * @Date 2020-04-23 16:46
+     * @Author Graydon
+     **/
+    @ResponseBody
+    @PostMapping("/execute/accept")
+    public R accept(Comment comment){
+        postService.accept(comment);
         return R.ok(null);
     }
 }

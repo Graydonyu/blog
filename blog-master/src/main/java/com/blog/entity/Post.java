@@ -74,4 +74,9 @@ public class Post extends Entity {
      * 状态
      */
          private Integer status;
+
+    /**
+     * 采纳的评论ID
+     */
+    private Long commentId;
 }
