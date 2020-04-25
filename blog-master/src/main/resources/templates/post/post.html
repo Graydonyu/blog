@@ -61,7 +61,7 @@
                         <span th:text="${post.created}"></span>
                     </div>
                     <div class="detail-hits" id="LAY_jieAdmin" data-id="123">
-                        <span style="padding-right: 10px; color: #FF7200">悬赏：60飞吻</span>
+                        <span style="padding-right: 10px; color: #FF7200">悬赏：<span style="color: #FF7200" th:text="${post.point}"></span>飞吻</span>
 
                         <shiro:user>
                             <span class="layui-btn layui-btn-xs jie-admin" type="edit" th:if="${session.profile.id == post.user_id}">

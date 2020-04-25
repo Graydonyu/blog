@@ -79,4 +79,9 @@ public class Post extends Entity {
      * 采纳的评论ID
      */
     private Long commentId;
+
+    /**
+     * 帖子积分
+     */
+    private Integer point;
 }

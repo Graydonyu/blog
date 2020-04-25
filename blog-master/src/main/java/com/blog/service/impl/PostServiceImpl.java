@@ -10,11 +10,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.entity.Comment;
 import com.blog.entity.Post;
-import com.blog.entity.PraiseLog;
+import com.blog.entity.User;
 import com.blog.entity.enums.IsEnum;
 import com.blog.entity.req.SetLevelOrRecommendReq;
 import com.blog.mapper.PostMapper;
-import com.blog.mapper.PraiseLogMapper;
 import com.blog.search.dto.PostDTO;
 import com.blog.service.ICategoryService;
 import com.blog.service.ICommentService;
@@ -29,7 +28,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -289,9 +293,12 @@ public class PostServiceImpl extends BaseServiceImpl<PostMapper, Post> implement
         post.setCommentId(commentId);
         post.setStatus(Constant.END_STATUS);
 
+        //下发积分
+        User user = userService.getById(comment.getUserId());
+        user.setPoint(user.getPoint() + post.getPoint());
+        userService.updateById(user);
+
         updateById(post);
         commentService.updateById(comment);
-
-        //TODO：下发积分操作
     }
 }

@@ -10,9 +10,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.entity.Category;
 import com.blog.entity.Comment;
 import com.blog.entity.Post;
+import com.blog.entity.User;
 import com.blog.entity.enums.IsEnum;
 import com.blog.entity.req.SetLevelOrRecommendReq;
 import com.blog.service.IPostService;
+import com.blog.shiro.AccountProfile;
 import com.blog.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -76,6 +78,8 @@ public class PostController extends BaseController{
             return R.failed(bindingResult.getFieldError().getDefaultMessage());
         }
 
+        User user = userService.getById(getProfileId());
+
         if(post.getId() == null) {
             post.setUserId(getProfileId());
 
@@ -88,18 +92,32 @@ public class PostController extends BaseController{
             post.setViewCount(0);
             post.setVoteDown(0);
             post.setVoteUp(0);
+            if(post.getPoint() == null){
+                post.setPoint(0);
+            }
             post.setStatus(Constant.NORMAL_STATUS);
+
+            //积分校验和扣减积分
+            if(post.getPoint() > user.getPoint()){
+                return R.failed("悬赏积分不足!当前剩余积分:" + user.getPoint());
+            }
+
+            user.setPoint(user.getPoint() - post.getPoint());
+            userService.updateById(user);
         } else {
 
             Post tempPost = postService.getById(post.getId());
-            if(tempPost.getUserId() != getProfileId()) {
-                return R.failed("不是自己的帖子");
+            if(tempPost.getUserId() != user.getId()) {
+                return R.failed("不是自己的帖子!");
+            }
+            if(tempPost.getPoint() != post.getPoint()){
+                return R.failed("积分不能修改!");
             }
         }
 
         postService.saveOrUpdate(post);
 
-        //TODO 给所有订阅的人发送消息，设置积分
+        //TODO 给所有订阅的人发送消息
 
         return R.ok(post.getId());
     }
